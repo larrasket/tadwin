@@ -50,7 +50,9 @@ Publish the site by executing ~tadwin.el~:
 chmod +x tadwin.el
 ./tadwin.el
 #+end_src
-This assumes that ~doomscript~ is in your ~$PATH~.
+This assumes that ~doomscript~ is in your ~$PATH~. It will create a ~public/~
+directory with your static website. You can publish it later using whatever
+service you wish, like [[https://fly.io/][fly.io]] or [[https://pages.github.com/][GitHub Pages]].
 ** Tip for org-roam
 If you wish sometimes to include the backlinks for a node that you have, you can
 add something like:
