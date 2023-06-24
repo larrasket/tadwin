@@ -8,8 +8,8 @@
 
 (setq header (with-temp-buffer
                (insert-file-contents "assets/head.html")
-               (buffer-string))
-      org-id-locations-file                             "~/roam/.orgids")
+               (buffer-string)))
+
 
 (setq preamble (with-temp-buffer
                  (insert-file-contents "assets/preamble.html")
@@ -19,14 +19,9 @@
                    (insert-file-contents "assets/postamable.html")
                    (buffer-string)))
 
-(setq user-full-name "Salih Muhammed")
 (setq org-export-time-stamp-file nil)
+(setq org-id-locations-file "~/roam/.orgids")
 (defvar salih/org-export-replace-links-counter 0)
-
-
-
-
-
 
 
 (defun salih/org-string-to-html (org-string)
@@ -77,19 +72,12 @@
   (let ((nodes (salih/get-back-nodes (org-entry-get nil "ID" t)))
         (strings '()))
     (while nodes (push (salih/org-string-to-html (salih/mkentity (car nodes))) strings)
-      (setq nodes (cdr nodes)))
+           (setq nodes (cdr nodes)))
     (mapconcat 'identity strings "")))
- 
 
 
 
-
-;; modify with an "if error skip" logic
-;; still need conditional
 (defun salih/get-preview (file)
-  "get preview text from a file
-Uses the function here as a starting point:
-https://ogbe.net/blog/blogging_with_org.html"
   (with-temp-buffer
     (insert-file-contents file)
     (goto-char (point-min))
@@ -98,6 +86,9 @@ https://ogbe.net/blog/blogging_with_org.html"
       (let ((beg (+ 1 (re-search-forward "^#\\+BEGIN_PREVIEW$" nil 1)))
             (end (progn (re-search-forward "^#\\+END_PREVIEW$" nil 1)
                         (match-beginning 0))))
+        (goto-char beg)
+        (while (search-forward "\n" end t)
+          (replace-match " " nil t))
         (buffer-substring beg end)))))
 
 
@@ -119,7 +110,7 @@ https://ogbe.net/blog/blogging_with_org.html"
                    (org-publish-find-title entry project)
 
                    (format-time-string "%a %d %b %Y" (org-publish-find-date entry
-                                                                        project))
+                                                                            project))
                    preview)))
         ((eq style 'tree)
          (file-name-nondirectory (directory-file-name entry)))
@@ -178,16 +169,16 @@ https://ogbe.net/blog/blogging_with_org.html"
            :publishing-directory "public"
            :recursive t
            :publishing-function org-publish-attachment)
-           
+
           ("assets"
            :base-directory "./assets"
            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|svg\\|pdf\\|mp3\\|woff2\\|woff\\|html\\|md\\|ico"
            :publishing-directory "public"
            :recursive t
            :publishing-function org-publish-attachment)
-           
+
           ("blog" :components ("blog-notes" "assets" "blog-static")))))
-          
+
 (salih/set-org-publish-project-alist)
 
 
