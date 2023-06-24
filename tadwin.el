@@ -165,7 +165,7 @@
 
           ("blog-static"
            :base-directory "./content"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|svg\\|pdf\\|mp3\\|woff2\\|woff"
+           :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|svg\\|pdf\\|mp3\\|woff2\\|woff"
            :publishing-directory "public"
            :recursive t
            :publishing-function org-publish-attachment)
