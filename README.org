@@ -1,1 +1,12 @@
 #+DATE: July 6, 2017
+* Tadiwn — تدوين: blogging with elisp
+
+This repository holds code for my publishing system that I use for my [[https://lr0.fly.dev/][website]],
+written in elisp.
+** Requirements
++ ~tadwin.el~ uses the ~doomscript~ executor to access emacs, thus it requires
+  a [[https://github.com/doomemacs/doomemacs][doom emacs]] installation, however this can be modified easily to use a
+  vanilla emacs instead.
++ ~org-roam~ is required by default to link the nodes (website org files) with
+  each others, however this is can be dismissed too, but you will have to depend
+  on hierarchical approach to organize your files, which often breaks.
