@@ -9,3 +9,14 @@
 
 # Undo-tree save-files
 *.~undo-tree
+/static/
+/public/
+/luggages/
+/content/
+/pic/
+/assets.old/
+/archived/
+/.packages/
+/sigal.conf.py
+/build.sh
+/publish.sh
