@@ -252,7 +252,7 @@ ul {
 
 
 @media screen and (min-width: 800px) {
-  .PREVIEW {
+  .PREVIEW  {
     float: right;
     clear: right;
     margin-right: -10.6%;
@@ -267,6 +267,22 @@ ul {
     border-top: 2px solid #2E3436;
     border-bottom: 2px solid #2E3436;
   }
+
+  .propert  {
+    float: left;
+    clear: left;
+    margin-left: -29.6%;
+    width: 30%;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.1;
+    vertical-align: baseline;
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+
   h1 {
     font-size: 62px;
   }
@@ -279,10 +295,14 @@ ul {
   }
 
 
-  .PREVIEW p {
-    text-align: start !important;
+  .PREVIEW p, .propert p {
+  text-align: start !important;
   font-family: "Freight Sans";
   }
+  .propert p {
+    font-style: italic;
+  }
+
 
   .smth {
     font-size: 18px;

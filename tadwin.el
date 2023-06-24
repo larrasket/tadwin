@@ -26,9 +26,13 @@
 
 (defun salih/org-string-to-html (org-string)
   "Export an Org-mode string to HTML."
-  (with-temp-buffer
-    (insert org-string)
-    (org-export-string-as (buffer-string) 'html t)))
+  (let ((org-export-with-toc nil)
+        (org-export-with-section-numbers nil))
+    (with-temp-buffer
+     (insert org-string)
+     (org-export-string-as (buffer-string) 'html t))))
+
+  
 
 
 (defun salih/get-date (file)
@@ -45,23 +49,32 @@
            (file-attribute-modification-time (file-attributes file))))))
 
 
+(defun salih/compare-timestamps (node1 node2)
+  "Comparison function to sort structs based on timestamp slot."
+  (let ((timestamp1 (salih/get-date (org-roam-node-file node1)))
+        (timestamp2 (salih/get-date (org-roam-node-file node2))))
+    (time-less-p  timestamp2 timestamp1)))
+
+
+
 (defun salih/get-back-nodes (id)
   (let ((backlinks (org-roam-backlinks-get (org-roam-node-from-id id) :unique t))
         nodes '())
     (while backlinks
       (push (org-roam-backlink-source-node (car backlinks)) nodes)
       (setq backlinks  (cdr backlinks)))
-    nodes))
+    (sort nodes #'salih/compare-timestamps)))
 
 
 
-(defun salih/mkentity (node)
+(defun salih/mkentity (node counter)
   (let* ((id (org-roam-node-id node))
          (entry (org-roam-node-file (org-roam-node-from-id id)))
          (preview (if (salih/get-preview entry)
                       (salih/get-preview entry)
                     "(No preview)")))
-    (format "[[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
+    (format "** %s. [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
+            counter
             id
             (car (org-publish-find-property entry :title nil))
             (format-time-string "%a %d %b %Y" (salih/get-date entry))
@@ -69,10 +82,13 @@
 
 
 (defun salih/print-back-links ()
-  (let ((nodes (salih/get-back-nodes (org-entry-get nil "ID" t)))
-        (strings '()))
-    (while nodes (push (salih/org-string-to-html (salih/mkentity (car nodes))) strings)
-           (setq nodes (cdr nodes)))
+  (let* ((nodes (salih/get-back-nodes (org-entry-get nil "ID" t)))
+         (strings '())
+         (counter (length nodes)))
+    (while nodes (push (salih/org-string-to-html (salih/mkentity (car nodes) counter))
+                       strings)
+           (setq nodes (cdr nodes)
+                 counter (- counter 1)))
     (mapconcat 'identity strings "")))
 
 
