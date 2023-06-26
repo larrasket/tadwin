@@ -29,10 +29,10 @@
   (let ((org-export-with-toc nil)
         (org-export-with-section-numbers nil))
     (with-temp-buffer
-     (insert org-string)
-     (org-export-string-as (buffer-string) 'html t))))
+      (insert org-string)
+      (org-export-string-as (buffer-string) 'html t))))
 
-  
+
 
 
 (defun salih/get-date (file)
@@ -48,6 +48,11 @@
           ((file-exists-p file)
            (file-attribute-modification-time (file-attributes file))))))
 
+(defun salih/time-less-p (v1 v2 &optional reversed)
+  (if reversed
+      (time-less-p  timestamp1 timestamp2)
+    (time-less-p  timestamp2 timestamp1)))
+
 
 (defun salih/compare-timestamps (node1 node2)
   "Comparison function to sort structs based on timestamp slot."
@@ -57,35 +62,49 @@
 
 
 
-(defun salih/get-back-nodes (id)
+(defun salih/get-back-nodes (id &optional no-sort)
   (let ((backlinks (org-roam-backlinks-get (org-roam-node-from-id id) :unique t))
         nodes '())
     (while backlinks
+      ;; if (cl-search "blog" (org-roam-node-file (car backlinks)))
       (push (org-roam-backlink-source-node (car backlinks)) nodes)
       (setq backlinks  (cdr backlinks)))
-    (sort nodes #'salih/compare-timestamps)))
+    (if no-sort (reverse (sort nodes #'salih/compare-timestamps))
+      (sort nodes #'salih/compare-timestamps))))
 
 
 
-(defun salih/mkentity (node counter)
+(defun salih/mkentity (node counter tag)
   (let* ((id (org-roam-node-id node))
          (entry (org-roam-node-file (org-roam-node-from-id id)))
          (preview (if (salih/get-preview entry)
                       (salih/get-preview entry)
                     "(No preview)")))
-    (format "** %s. [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
-            counter
-            id
-            (car (org-publish-find-property entry :title nil))
-            (format-time-string "%a %d %b %Y" (salih/get-date entry))
-            preview)))
+    (if (cl-search "blog" (org-roam-node-file node))
+        (if tag
+            (format "** [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
+                    id
+                    (car (org-publish-find-property entry :title nil))
+                    (format-time-string "%a %d %b %Y" (salih/get-date entry))
+                    preview)
+          (format "** %s. [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
+                  counter
+                  id
+                  (car (org-publish-find-property entry :title nil))
+                  (format-time-string "%a %d %b %Y" (salih/get-date entry))
+                  preview))
+      "")))
 
 
-(defun salih/print-back-links ()
-  (let* ((nodes (salih/get-back-nodes (org-entry-get nil "ID" t)))
+
+
+(defun salih/print-back-links (&optional tag)
+  (let* ((nodes (salih/get-back-nodes (org-entry-get nil "ID" t) tag))
          (strings '())
          (counter (length nodes)))
-    (while nodes (push (salih/org-string-to-html (salih/mkentity (car nodes) counter))
+    (while nodes (push (salih/org-string-to-html (salih/mkentity
+                                                  (car nodes)
+                                                  counter tag))
                        strings)
            (setq nodes (cdr nodes)
                  counter (- counter 1)))
