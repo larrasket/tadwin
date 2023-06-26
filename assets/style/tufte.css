@@ -183,21 +183,6 @@ figure {
     margin: 0 0 3em 0;
 }
 
-figcaption {
-    float: right;
-    clear: right;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    vertical-align: baseline;
-    position: relative;
-    max-width: 40%;
-}
-
-figure.fullwidth figcaption {
-    margin-right: 24%;
-}
 
 /* Links: replicate underline that clears descenders */
 a:link,
@@ -397,11 +382,6 @@ label.margin-toggle:not(.sidenote-number) {
         max-width: 90%;
     }
 
-    figcaption,
-    figure.fullwidth figcaption {
-        margin-right: 0%;
-        max-width: none;
-    }
 
     blockquote {
         margin-left: 1.5em;
