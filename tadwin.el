@@ -84,13 +84,13 @@
         (if tag
             (format "** [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
                     id
-                    (car (org-publish-find-property entry :title nil))
+                    (org-roam-node-title node)
                     (format-time-string "%a %d %b %Y" (salih/get-date entry))
                     preview)
           (format "** %s. [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
                   counter
                   id
-                  (car (org-publish-find-property entry :title nil))
+                  (org-roam-node-title node)
                   (format-time-string "%a %d %b %Y" (salih/get-date entry))
                   preview))
       "")))
