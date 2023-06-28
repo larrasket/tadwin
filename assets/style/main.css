@@ -41,6 +41,7 @@ table tr th:last-child {
 p {
         text-align: justify;
         unicode-bidi: plaintext;
+        font-family: 'Tinos';
 }
 
 
@@ -395,3 +396,4 @@ ul {
   .figure-number {
     display: none;
   }
+
