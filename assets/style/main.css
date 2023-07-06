@@ -41,7 +41,6 @@ table tr th:last-child {
 p {
         text-align: justify;
         unicode-bidi: plaintext;
-        font-family: 'Tinos';
 }
 
 
@@ -215,11 +214,64 @@ ul {
 }
 
 
-.smth{
-  display: none !important;
-}
 
 }
+
+
+
+
+  @media screen and (min-width: 1500px) {
+
+  .smth {
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: -5.8%;
+    margin-bottom: 16px;
+    float: right;
+    clear: right;
+    position: relative;
+    vertical-align: baseline;
+    margin-right: 21.4%;
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+
+
+  }
+  .smth p {
+  font-size: 14px;
+  text-align: left;
+  font-family: 'Tinos';
+  }
+
+  }
+
+  @media screen and (max-width: 1490px) and (min-width: 1090px)  {
+  .smth {
+    font-size: 18px;
+    margin-top: -7.8%;
+    float: left;
+    margin-left: -13.4%;
+
+    overflow: hidden;
+    white-space: nowrap;
+
+
+  }
+  .smth p {
+  font-size: 14px;
+  text-align: left;
+  font-family: 'Tinos';
+  }
+
+  }
+  @media screen and (max-width:1089px) {
+    .smth {
+      display: none;
+    }
+  }
+
+
 
 p,
 dl,
@@ -259,7 +311,11 @@ ul {
 
 
 
+
 @media screen and (min-width: 1740px) {
+  p {
+  font-family: 'Tinos';
+  }
   .propert, .tag  {
     float: left;
     clear: left;
@@ -294,6 +350,10 @@ ul {
 
 
 @media screen and (min-width: 760px) {
+
+  p {
+            font-family: 'Tinos';
+  }
 
   figcaption {
     padding-left: 315px;
@@ -342,15 +402,18 @@ ul {
 
   .PREVIEW p, .propert p, .tag p {
   text-align: start !important;
-  font-family: 'Tinos';
   width: 70% !important;
   }
 
   h1 {
-    font-size: 62px;
+    font-size: 62px !important;
   }
 }
 
+
+h1 {
+  font-size: 32px;
+}
 
   .PREVIEW {
     border-top: 2px solid #2E3436;
@@ -366,28 +429,6 @@ ul {
     font-style: italic;
   }
 
-
-  .smth {
-    font-size: 18px;
-    line-height: 22px;
-    margin-top: -5.8%;
-    margin-bottom: 16px;
-    float: right;
-    clear: right;
-    position: relative;
-    vertical-align: baseline;
-    margin-right: 21.4%;
-    width: 200px;
-    overflow: hidden;
-    white-space: nowrap;
-
-
-  }
-  .smth p {
-  font-size: 14px;
-  text-align: left;
-  font-family: 'Tinos';
-  }
 
 
 

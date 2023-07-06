@@ -12,9 +12,22 @@
 	  -moz-box-shadow: 0 0 1em #777777;
 	  -webkit-border-bottom-left-radius: 5px;
 	  -moz-border-radius-bottomleft: 5px;
-	  /* ensure doesn't flow off the screen when expanded */
 	  max-height: 80%;
-	  overflow: auto; }
+    overflow: auto;
+}
+
+
+#table-of-contents ul {
+    /* width: 20% !important; */
+    margin-left: 20px;;
+}
+@media screen and (min-width: 760px) {
+
+}
+
+/* #table-of-contents li { */
+/*     width: 90% !important; */
+/* } */
 #table-of-contents h2 {
 	  font-size: 13pt;
 	  max-width: 9em;
