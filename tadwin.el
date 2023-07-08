@@ -23,6 +23,16 @@
 (setq org-id-locations-file "~/roam/.orgids")
 (defvar salih/org-export-replace-links-counter 0)
 
+(setq org-html-mathjax-options '((path "https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js")
+                                 (scale 1.0)
+                                 (align "center")
+                                 (font "mathjax-modern")
+                                 (overflow "overflow")
+                                 (tags "ams")
+                                 (indent "0em")
+                                 (multlinewidth "85%")
+                                 (tagindent ".8em")
+                                 (tagside "right")))
 
 (defun salih/org-string-to-html (org-string)
   "Export an Org-mode string to HTML."
