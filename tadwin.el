@@ -136,12 +136,27 @@
           (replace-match " " nil t))
         (buffer-substring beg end)))))
 
+(defun salih/delete-index (list)
+  "Delete items containing the word 'index' from LIST."
+  (cond
+   ((null list) nil)
+   ((atom list)
+    (if (stringp list)
+        (unless (string-match-p "index.org" list)
+          list)
+      list))
+   (t
+    (let ((car-result (salih/delete-index (car list)))
+          (cdr-result (salih/delete-index (cdr list))))
+      (if (and (null car-result) (null cdr-result))
+          nil
+        (cons car-result cdr-result))))))
 
-;; modify this one! (if necessary)
+
 (defun salih/org-publish-org-sitemap (title list)
   "Sitemap generation function."
   (concat "#+OPTIONS: toc:nil")
-  (org-list-to-subtree list))
+  (org-list-to-subtree (salih/delete-index list)))
 
 ;; modify this one!
 (defun salih/org-publish-org-sitemap-format (entry style project)
