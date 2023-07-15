@@ -1,8 +1,13 @@
 #!/usr/bin/env doomscript
 (require 'doom-start)
-(require 'ox-tufte)
-(require 'org)
-(require 'ox-publish)
+(load "~/blog/id.el")
+
+
+
+
+
+(setq org-id-link-to-org-use-id t)
+
 
 
 
@@ -89,7 +94,7 @@
          (entry (org-roam-node-file (org-roam-node-from-id id)))
          (preview (if (salih/get-preview entry)
                       (salih/get-preview entry)
-                    "(No preview)")))
+                    "")))
     (if (cl-search "blog" (org-roam-node-file node))
         (if tag
             (format "** [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
@@ -186,6 +191,7 @@
 (setq org-html-style-default (salih/file-contents "assets/head.html"))
 
 
+(setq org-html-prefer-user-labels t)
 
 (defun salih/set-org-publish-project-alist ()
   "Set publishing projects for Orgweb and Worg."
@@ -193,7 +199,7 @@
   (setq org-publish-project-alist
         `(("blog-notes"
            ;; Directory for source files in org format
-           :language "zh"
+           :language "en"
            :base-directory "./content"
            :base-extension "org"
            :html-doctype "html5"
