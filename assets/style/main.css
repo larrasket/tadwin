@@ -204,6 +204,11 @@ li p {
 }
 
 @media only screen and (max-width: 768px) {
+
+iframe {
+  width: 100%;
+}
+
   body {
     font-family: "Times New Roman", Times;
     font-size: 14px
@@ -482,5 +487,7 @@ blockquote {
 
 
 
-.sidenote , .marginnote  {
+
+.sidenote a, .footpara a {
+    word-break: break-all;
 }
