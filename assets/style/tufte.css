@@ -111,12 +111,12 @@ p {
 
 /* Chapter Epigraphs */
 div.epigraph {
-    margin: 5em 0;
+    /* margin: 5em 0; */
 }
 
 div.epigraph > blockquote {
-    margin-top: 3em;
-    margin-bottom: 3em;
+    margin-top: 0em;
+    margin-bottom: 0em;
 }
 
 div.epigraph > blockquote,
@@ -161,7 +161,7 @@ li p { width: 100% !important }
 #content ol,
 #content ul {
     width: 55%;
-    -webkit-padding-start: 5%;
+    /* -webkit-padding-start: 5%; */
 }
 
 dt:not(:first-child),
@@ -232,6 +232,8 @@ img {
     vertical-align: baseline;
     position: relative;
     padding-bottom: 10px;
+    word-spacing:-2px;
+
 }
 
 .sidenote-number {
