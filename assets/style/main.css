@@ -1,3 +1,9 @@
+.footpara {
+    display: inline;
+}
+
+
+
 table {
   border-collapse: collapse;
   border-spacing: 20px;
@@ -41,6 +47,7 @@ table tr th:last-child {
 p {
         text-align: justify;
         unicode-bidi: plaintext;
+
 }
 
 
@@ -222,6 +229,9 @@ ul {
 
   @media screen and (min-width: 1500px) {
 
+  .footnotes {display :none; }
+  .footdef {display :none;}
+
   .smth {
     font-size: 18px;
     line-height: 22px;
@@ -283,8 +293,6 @@ ul {
 
 
 
-  .footnotes {display :none; }
-  .footdef {display :none;}
 
 
   pre {
@@ -438,3 +446,41 @@ h1 {
     display: none;
   }
 
+
+
+
+  .csl-bib-body { width: 90%; }
+.csl-entry { display: contents; }
+.csl-block { grid-column: 1/span 2; background: lightpink; }
+.csl-left-margin {  padding-right: 1em;}
+.csl-right-inline {    padding-left: 10px;}
+.csl-indent { margin-left: 2em; grid-column: 1/span 2; background: lightsalmon; }
+
+
+div.epigraph > blockquote > footer {
+    font-style: normal;
+}
+
+div.epigraph > blockquote > footer > cite {
+    font-style: italic;
+}
+/* end chapter epigraphs styles */
+
+
+
+
+blockquote {
+    margin-left: 1rem;
+    font-style: italic;
+    font-family: serif;
+    border-left: 3px solid;
+    border-left-color: currentcolor;
+    border-color: var(--text-color);
+    padding-left: 1em;
+}
+
+
+
+
+.sidenote , .marginnote  {
+}
