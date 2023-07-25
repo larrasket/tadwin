@@ -4,6 +4,84 @@
 
 
 
+(setq org-export-global-macros
+      '(("comments" . "(eval (salih/print-text-nodes))")
+        ("b" . "(eval (format \"#+begin_export html\n%s\n#+end_export\" (salih/print-back-links)))")
+        ("t" . "(eval (concat \"This section was labeled under\"))")
+        ("s" . "(eval (concat \"Part of a series on\"))")))
+
+
+(defun org-export--annotate-info (backend info &optional subtreep visible-only ext-plist)
+  (let ((parsed-keywords
+         (delq nil
+               (mapcar (lambda (o) (and (eq (nth 4 o) 'parse) (nth 1 o)))
+                       (append (org-export-get-all-options backend)
+                               org-export-options-alist))))
+        tree modified-tick)
+    (run-hook-with-args 'org-export-before-processing-hook
+                        (org-export-backend-name backend))
+    (org-export-expand-include-keyword)
+    (org-export--delete-comment-trees)
+    (org-macro-initialize-templates org-export-global-macros)
+    (org-macro-replace-all org-macro-templates parsed-keywords)
+
+
+    (org-export-expand-include-keyword)
+    (org-export--delete-comment-trees)
+    (org-macro-initialize-templates org-export-global-macros)
+    (org-macro-replace-all org-macro-templates parsed-keywords)
+    ;; Refresh buffer properties and radio targets after previous
+    ;; potentially invasive changes.
+    (org-set-regexps-and-options)
+    (org-update-radio-target-regexp)
+    (setq modified-tick (buffer-chars-modified-tick))
+    (when org-export-use-babel
+      (org-babel-exp-process-buffer)
+      (org-macro-replace-all '(("results" . "$1")) parsed-keywords)
+      (unless (eq modified-tick (buffer-chars-modified-tick))
+        (org-set-regexps-and-options)
+        (org-update-radio-target-regexp))
+      (setq modified-tick (buffer-chars-modified-tick)))
+    (goto-char (point-min))
+    (save-excursion
+      (run-hook-with-args 'org-export-before-parsing-hook
+                          (org-export-backend-name backend)))
+    (unless (eq modified-tick (buffer-chars-modified-tick))
+      (org-set-regexps-and-options)
+      (org-update-radio-target-regexp))
+    (setq modified-tick (buffer-chars-modified-tick))
+    (setq info
+          (org-combine-plists
+           info (org-export-get-environment backend subtreep ext-plist)))
+    (org-cite-store-bibliography info)
+    (org-cite-store-export-processor info)
+    (dolist (entry (append (org-export-get-all-options backend)
+                           org-export-options-alist))
+      (pcase entry
+        (`(,p ,_ ,_ ,_ parse)
+         (let ((value (plist-get info p)))
+           (plist-put info
+                      p
+                      (org-export--remove-uninterpreted-data value info))))
+        (_ nil)))
+    (setq info (org-export-install-filters info))
+    (let ((backend-name (org-export-backend-name backend)))
+      (dolist (filter (plist-get info :filter-options))
+        (let ((result (funcall filter info backend-name)))
+          (when result (setq info result)))))
+    (setq tree (org-element-parse-buffer nil visible-only 'defer))
+    (org-export--prune-tree tree info)
+    (org-export--remove-uninterpreted-data tree info)
+    (setq tree
+          (org-export-filter-apply-functions
+           (plist-get info :filter-parse-tree) tree info))
+    (setq info (org-export--collect-tree-properties tree info))
+    (org-cite-process-citations info)
+    (org-cite-process-bibliography info)
+    info))
+
+
+
 
 
 (setq org-id-link-to-org-use-id t)
@@ -77,13 +155,14 @@
 
 
 
+
 (defun salih/get-back-nodes (id &optional no-sort with-sh)
   (let ((backlinks (org-roam-backlinks-get (org-roam-node-from-id id) :unique t))
         nodes '())
     (while backlinks
       (let ((shp (cl-search "/sh/" (org-roam-node-file
                                     (org-roam-backlink-source-node (car backlinks))))))
-        (if (or (and with-sh shp) (and (not with-sh) (not shp) ))
+        (if (or (and with-sh shp) (and (not with-sh) (not shp)))
             (push (org-roam-backlink-source-node (car backlinks)) nodes)))
       (setq backlinks  (cdr backlinks)))
     (if no-sort (reverse (sort nodes #'salih/compare-timestamps))
@@ -99,7 +178,7 @@
          (preview (if (salih/get-preview entry)
                       (salih/get-preview entry)
                     "")))
-    (if (cl-search "blog" (org-roam-node-file node))
+    (if (and (cl-search "blog" (org-roam-node-file node)) (not (cl-search "/t/" (org-roam-node-file node))))
         (if tag
             (format "%s [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
                     astr
@@ -115,6 +194,30 @@
                   (format-time-string "%a %d %b %Y" (salih/get-date entry))
                   preview))
       "")))
+
+
+(defun salih/compare-org-id (node1 node2)
+  (let ((timestamp1 (cdr (org-id-decode (reverse (org-roam-node-id node1)))))
+        (timestamp2 (cdr (org-id-decode (reverse (org-roam-node-id node2))))))
+    (time-less-p  timestamp2 timestamp1)))
+
+(defun salih/print-text-nodes ()
+  (let* ((nodes (sort (salih/get-back-nodes (org-entry-get nil "ID" t) ) #'salih/compare-org-id))
+         (strings '()))
+    (while nodes (push (salih/mkinclude (car nodes))
+                       strings)
+           (setq nodes (cdr nodes)))
+    (mapconcat 'identity strings "")))
+
+
+(defun salih/mkinclude (node &optional astr)
+  (unless astr
+    (setq astr "**"))
+  (let* ((id (org-roam-node-id node))
+         (entry (org-roam-node-file (org-roam-node-from-id id))))
+    (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
+              entry
+              id)))
 
 
 
@@ -204,6 +307,33 @@
 
 (setq org-html-prefer-user-labels t)
 
+(setq org-export-with-clocks t)
+
+
+(setq org-export-with-clocks t)
+
+(defun org-html-timestamp (timestamp _contents info)
+  "Transcode a TIMESTAMP object from Org to HTML.
+CONTENTS is nil.  INFO is a plist holding contextual
+information."
+  (let* ((ts (org-timestamp-translate timestamp))
+         (time (apply #'encode-time (org-parse-time-string ts)))
+         (formatted-time (format-time-string "%A, %e %B %Y (%H:%M)" time)))
+    (format "<span class=\"timestamp-wrapper\"><span class=\"timestamp\">%s</span></span>"
+            (replace-regexp-in-string "--" "&#x2013;" formatted-time))))
+
+
+;; (defun org-drawerkk (name content)
+;;   (format "@<div class=\"notes\"> %s @</div>" content))
+
+;; (setq org-html-format-drawer-function 'org-drawerkk)
+(setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+
+(defun org-drawerkk (name content)
+  (format "<div class=\"notes\"> %s </div>" content))
+
+(setq org-html-format-drawer-function 'org-drawerkk)
+
 (defun salih/set-org-publish-project-alist ()
   "Set publishing projects for Orgweb and Worg."
   (interactive)
@@ -226,6 +356,7 @@
            :html-preamble ,preamble
            :html-postamble ,postamalbe
 
+           :with-drawers t
            :auto-sitemap t
            :sitemap-title nil
            :sitemap-format-entry salih/org-publish-org-sitemap-format
