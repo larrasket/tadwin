@@ -30,10 +30,21 @@ body {
     counter-reset: sidenote-counter;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+    font-family: 'Linux Biolinum',sans-serif !important;
+    line-height: 1.3em;
+    text-transform: none;
+    border: none !important;
+
+
+
+}
+
+h2, h3, h4, h5, h6 {
     text-transform: none;
     font-family: 'Marcellus SC',sans-serif;
     line-height: 1.3em;
+    font-weight: normal !important;
     border: none !important;
 }
 
