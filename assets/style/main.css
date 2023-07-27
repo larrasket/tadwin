@@ -502,13 +502,30 @@ h1 {
 
 
 
-  .csl-bib-body { width: 90%; }
-.csl-entry { display: contents; }
-.csl-block { grid-column: 1/span 2; background: lightpink; }
-.csl-left-margin {  padding-right: 1em;}
-.csl-right-inline {    padding-left: 10px;}
-.csl-indent { margin-left: 2em; grid-column: 1/span 2; background: lightsalmon; }
-
+/* To get the pandoc-generated bibliography to match style, define csl classes. */
+div.csl-entry {
+    clear: both;
+    margin-top: .5rem;
+}
+.hanging div.csl-entry {
+    margin-left: 2rem;
+    text-indent: -2rem;
+}
+div.csl-left-margin {
+    min-width: 2rem;
+    float: left;
+}
+div.csl-right-inline {
+    margin-left: 2rem;
+    padding-left: 1rem;
+}
+div.csl-indent {
+    margin-left: 2rem;
+}
+div.hanging-indent{
+    margin-left: 1.5rem;
+    text-indent: -1.5rem;
+}
 
 div.epigraph > blockquote > footer {
     font-style: normal;
@@ -572,16 +589,26 @@ h2 .timestamp-wrapper {
 
 
 /* Common styles for both classes */
-span.done {
+span.done, span.todo {
     font-weight: bold;
     text-transform: uppercase;
     padding: 2px 10px;
 }
 
 /* Specific style for the "DONE" class */
-span.DONE {
-    background-color: #2e3436;
-    color: white;
+span.DONE, span.TODO {
     opacity: 60%;
     font-size: 12px;
+    color: white;
+
+}
+
+span.DONE {
+    background-color: #2e3436;
+}
+
+
+span.TODO {
+    opacity: 78%;
+    background-color: red;
 }

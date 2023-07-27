@@ -45,9 +45,11 @@
 	  padding: 0.5em;
 	  margin-top: -1.5em; }
 .code-highlighted { background-color: #ffff00; }
-.todo { color: red; }
-.todo.IN_PROGRESS { color: orange;}
-.todo.HOLD { color: orange;}
+
+/* .todo { color: red; } */
+/* .todo.IN_PROGRESS { color: orange;} */
+/* .todo.HOLD { color: orange;} */
+
 /* .done { display: none; } */
 .org-center {
     margin-left: auto;
