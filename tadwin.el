@@ -216,8 +216,8 @@
   (let* ((id (org-roam-node-id node))
          (entry (org-roam-node-file (org-roam-node-from-id id))))
     (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
-              entry
-              id)))
+            entry
+            id)))
 
 
 
