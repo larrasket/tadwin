@@ -196,10 +196,12 @@
       "")))
 
 
+
+
 (defun salih/compare-org-id (node1 node2)
-  (let ((timestamp1 (cdr (org-id-decode (reverse (org-roam-node-id node1)))))
-        (timestamp2 (cdr (org-id-decode (reverse (org-roam-node-id node2))))))
-    (time-less-p  timestamp2 timestamp1)))
+  (let ((timestamp1 (cdr (org-id-decode  (org-roam-node-id node1))))
+        (timestamp2 (cdr (org-id-decode  (org-roam-node-id node2)))))
+    (time-less-p  timestamp1 timestamp2)))
 
 (defun salih/print-text-nodes ()
   (let* ((nodes (sort (salih/get-back-nodes (org-entry-get nil "ID" t) ) #'salih/compare-org-id))
