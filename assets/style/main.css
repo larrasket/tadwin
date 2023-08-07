@@ -192,7 +192,19 @@ li p {
 
 @font-face {
   font-family: 'Times New Roman';
-  src: url('/style/bold.ttf') format('truetype');
+  src: url('/style/bold.Linux Biolinumtruetype');
+  font-weight: bold;
+}
+
+
+@font-face {
+  font-family: 'Lusitana';
+  src: url('/style/fonts/Lusitana-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lusitana';
+  src: url('/style/fonts/Lusitana-Bold.ttf') format('truetype');
   font-weight: bold;
 }
 
@@ -371,6 +383,9 @@ ul {
 
 
 
+span.tag {
+  font-size: 1rem;
+}
 
 
 @media screen and (min-width: 1740px) {
@@ -380,16 +395,21 @@ ul {
   .propert, .tag  {
     float: left;
     clear: left;
-    margin-left: -24.6%;
-    width: 24%;
+    margin-left: -14.6%;
     margin-top: 0.3rem;
     margin-bottom: 0;
+    width: 20%;
+
     font-size: 1.1rem;
     line-height: 1.1;
     vertical-align: baseline;
-    position: relative;
+    position: absolute;
     padding-bottom: 20px;
   }
+  span.tag {
+  margin-left: -40%;
+}
+
 }
 
 
@@ -455,7 +475,6 @@ ul {
     line-height: 1.1;
     vertical-align: baseline;
     position: relative;
-    padding-bottom: 20px;
     border-top: 2px solid #2E3436;
     border-bottom: 2px solid #2E3436;
   }
@@ -596,7 +615,7 @@ span.done, span.todo {
 }
 
 /* Specific style for the "DONE" class */
-span.DONE, span.TODO {
+span.DONE, span.TODO, SPAN.KILL {
     opacity: 60%;
     font-size: 12px;
     color: white;
@@ -608,7 +627,13 @@ span.DONE {
 }
 
 
+span.KILL {
+  background-color: #aaa;
+}
+
+
 span.TODO {
     opacity: 78%;
     background-color: red;
 }
+
