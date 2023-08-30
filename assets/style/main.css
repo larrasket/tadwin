@@ -619,3 +619,56 @@ span.TODO {
 }
 
 
+
+
+.UNEXPORTEDTAG {
+  display: none;
+}
+
+
+@media screen and (min-width:800px) {
+.isso-input-wrapper {
+  display: block;
+  max-width: 100%;
+  margin: 0 0 .3em;
+}
+.isso-input-wrapper input {
+  width: 100%;
+}
+.isso-post-action {
+  margin-top: 0;
+}
+}
+
+
+.isso-input-wrapper {
+        display: block;
+        max-width: 100%;
+   margin: 0 0 .3em;
+}
+.isso-input-wrapper input {
+    width: 100%;
+}
+.isso-post-action {
+    margin-top: 0;
+}
+
+
+@media screen and (min-width:800px) {
+.isso-input-wrapper {
+  display: block;
+  max-width: 100%;
+  margin: 0 0 .3em;
+}
+.isso-input-wrapper input {
+  width: 100%;
+}
+.isso-post-action {
+  margin-top: 0;
+}
+
+.isso-textarea {
+ max-width: 55%;
+}
+
+}

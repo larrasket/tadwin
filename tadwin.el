@@ -2,9 +2,21 @@
 (require 'doom-start)
 (load "~/blog/id.el")
 
+(setq isso-comments
+      "<section id=\"isso-thread\">
+    <noscript>Javascript needs to be activated to view comments.</noscript>
+</section>
+<script data-isso-css-url=\"https://lr0.fly.dev/style/comments.css\" data-isso-reply-notifications-default-enabled=\"true\" data-isso-vote=\"false\" data-isso=\"//salihcomments.fly.dev/\" src=\"//salihcomments.fly.dev/js/embed.min.js\"></script>")
 
 
 
+
+(setq org-export-global-macros
+      '(("comments" . "(eval (salih/print-text-nodes))")
+        ("dis" . "(eval (format \"* Comments \n #+begin_export html\n%s\n#+end_export\" isso-comments ))")
+        ("b" . "(eval (format \"#+begin_export html\n%s\n#+end_export\" (salih/print-back-links)))")
+        ("t" . "(eval (concat \"This section was labeled under\"))")
+        ("s" . "(eval (concat \"Part of a series on\"))")))
 
 
 (setq header (with-temp-buffer
@@ -138,6 +150,8 @@
     (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
             entry
             id)))
+
+
 
 
 
