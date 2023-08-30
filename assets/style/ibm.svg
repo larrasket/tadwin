@@ -1,0 +1,19 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+	<title>New Project</title>
+	<defs>
+		<image  width="500" height="500" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0AQMAAADxGE3JAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAADVJREFUeJztwTEBAAAAwqD1T+1hDaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbn0AAAGFEtj2AAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre } 
+		.t0 { font-size: 67px;fill: #ffffff;font-weight: 700;font-family: "IBMPlexMono-Bold", "Arial",  "IBM Plex Mono" } 
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+	<text id="The Mourner’s Bench" style="transform: matrix(1.291,0,0,1.291,14.709,257.477)" >
+		<tspan x="0" y="0" class="t0">The</tspan><tspan  y="0" class="t0">
+</tspan>
+		<tspan x="0" y="80.4" class="t0">Mourner’s</tspan><tspan  y="80.4" class="t0">
+</tspan>
+		<tspan x="0" y="160.8" class="t0">Bench</tspan><tspan  y="160.8" class="t0">
+</tspan>
+	</text>
+</svg>

@@ -1,207 +1,26 @@
-.footpara {
-    display: inline;
-}
-
-
-
-table {
-  border-collapse: collapse;
-  border-spacing: 20px;
-  padding: 5px;
-}
-table td, table th {
-  border: 1px solid rgba(0, 0, 0, .5);
-  padding: 5px;
-
-}
-
-th {
-    display: table-cell;
-    vertical-align: inherit;
-    font-weight: normal;
-    text-align: -internal-center;
-}
-
-table tr:first-child th {
-  border-top: 0;
-  padding: 5px;
-
-}
-table tr:last-child td {
-  border-bottom: 0;
-  padding: 5px;
-}
-table tr td:first-child,
-table tr th:first-child {
-  border-left: 0;
-  padding: 5px;
-}
-table tr td:last-child,
-table tr th:last-child {
-  border-right: 0;
-  padding: 5px;
-}
-
-
-
-p {
-        text-align: justify;
-        unicode-bidi: plaintext;
-
-}
-
-
-
-li p {
-        text-align: left;
-        unicode-bidi: normal;
-        margin-block-start: 0em;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-}
-
-/* Mono Font */
 @font-face {
-  font-family: "JetBrains Mono Bold";
-  src: url("style/fonts/JetBrainsMono-Bold.woff2") format("woff2");
-  font-style: normal;
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: "JetBrains Mono Italic";
-  src: url("style/fonts/JetBrainsMono-Italic.woff2") format("woff2");
-  font-style: normal;
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: "JetBrains Mono Regular";
-  src: url("style/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-family: "Arial Mono";
+  src: url("/style/arial_monospaced_mt.ttf") format("truetype");
   font-style: normal;
   font-weight: normal;
 }
 
 
 
-/* /\* TOC inspired by http://jashkenas.github.com/coffee-script *\/ */
-/* #table-of-contents { */
-/* 	  font-size: 10pt; */
-/* 	  position: fixed; */
-/* 	  right: 0em; */
-/* 	  top: 0em; */
-/* 	  background: #F9F9F9; */
-/* 	  line-height: 12pt; */
-/* 	  text-align: right; */
-/* 	  box-shadow: 0 0 1em #777777; */
-/* 	  -webkit-box-shadow: 0 0 1em #777777; */
-/* 	  -moz-box-shadow: 0 0 1em #777777; */
-/* 	  -webkit-border-bottom-left-radius: 5px; */
-/* 	  -moz-border-radius-bottomleft: 5px; */
-/* 	  /\* ensure doesn't flow off the screen when expanded *\/ */
-/* 	  max-height: 80%; */
-/* 	  overflow: auto; } */
-/* #table-of-contents h2 { */
-/* 	  font-size: 13pt; */
-/* 	  max-width: 9em; */
-/* 	  border: 0; */
-/* 	  font-weight: normal; */
-/* 	  padding-left: 0.5em; */
-/* 	  padding-right: 0.5em; */
-/* 	  padding-top: 0.05em; */
-/* 	  padding-bottom: 0.05em; } */
-/* #table-of-contents #text-table-of-contents { */
-/* 	  display: none; */
-/* 	  text-align: left; } */
-/* #table-of-contents:hover #text-table-of-contents { */
-/* 	  display: block; */
-/* 	  padding: 0.5em; */
-/* 	  margin-top: -1.5em; } */
-/* .code-highlighted { background-color: #ffff00; } */
-/* .todo { color: red; } */
-/* .todo.IN_PROGRESS { color: orange;} */
-/* .todo.HOLD { color: orange;} */
-/* .done { display: none; } */
-/* .org-center { */
-/*     margin-left: auto; */
-/*     margin-right: auto; */
-/*     text-align: center; */
-/* } */
-
-/* Styles for org-info.js */
-
-.org-info-js_info-navigation
-{
-  border-style:none;
-}
-
-#org-info-js_console
-{
-  color:#333333;
-  margin:0px;
-  background-color:#ffffff;
-}
-
-#org-info-js_console-input
-{
-  background-color:#ffffff;
-  border-style:none;
-  color:#333333;
-  padding-left:10px;
-  vertical-align:middle;
-}
-
-#org-info-js_console-label
-{
-  font-size:11px;
-  font-weight:bold;
-  padding-left:10px;
-  font-family:Verdana,Arial,sans-serif;
-  vertical-align:middle;
-}
-
-.org-info-js_console-label-warning
-{
-  color:#cc0000;
-}
-
-#org-info-js_console-container
-{
-    border:1px solid #cccccc;
-    overflow: unset;
-}
-
-.org-info-js_search-highlight
-{
-  background-color:#adefef; /* emacs default */
-  color:#000000;
-  font-weight:bold;
-}
-
-.org-info-js_info-navigation tr {
-    font-size: 0.95rem;
-}
-
-
-
 @font-face {
-  font-family: 'Times New Roman';
-  src: url('/style/time.ttf') format('truetype');
+  font-family: "Arial";
+  src: url("/style/arial.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
 }
 
 @font-face {
-  font-family: 'Times New Roman';
-  src: url('/style/bold.ttf') format('truetype');
+  font-family: "Arial";
+  src: url("/style/arial_bold.ttf") format("truetype");
+  font-style: normal;
   font-weight: bold;
 }
 
-
-@font-face {
-  font-family: 'Tinos';
-  src: url('/style/fonts/Tinos-Regular.ttf') format('truetype');
-  font-weight: bold;
-}
 
 /* Regular */
 @font-face {
@@ -252,254 +71,90 @@ li p {
 }
 
 
-
-@media only screen and (max-width: 768px) {
-
-iframe {
-  width: 100%;
+body {
+    font-family: 'Arial';
 }
 
-  body {
-    font-family: "Times New Roman", Times;
-    font-size: 14px
-  }
+p {
+    line-height: 1.2;
+}
 
-p,
+
+.footpara {
+    display: inline;
+}
+
+
 dl,
 ol,
 ul {
-    font-size: 1.2rem !important;
-    line-height: 1.7rem !important;
+    /* font-size: 1.2rem !important; */
+    /* line-height: 1.7rem !important; */
     text-align: start !important;
-
-
 }
 
 
-
-}
-
-
-
-
-  @media screen and (min-width: 1500px) {
-
-  .footnotes {display :none; }
-  .footdef {display :none;}
-
-  .smth {
-    font-size: 18px;
-    line-height: 22px;
-    margin-top: -5.8%;
-    margin-bottom: 16px;
-    float: right;
-    clear: right;
-    position: relative;
-    vertical-align: baseline;
-    margin-right: 21.4%;
-    width: 200px;
-    overflow: hidden;
-    white-space: nowrap;
-
-
-  }
-  .smth p {
-  font-size: 14px;
-  text-align: left;
-  font-family: 'Tinos';
-  }
-
-  }
-
-  @media screen and (max-width: 1490px) and (min-width: 1090px)  {
-  .smth {
-    font-size: 18px;
-    margin-top: -7.8%;
-    float: left;
-    margin-left: -13.4%;
-
-    overflow: hidden;
-    white-space: nowrap;
-
-
-  }
-  .smth p {
-  font-size: 14px;
-  text-align: left;
-  font-family: 'Tinos';
-  }
-
-  }
-  @media screen and (max-width:1089px) {
-    .smth {
-      display: none;
+@media screen and (min-width: 1500px) {
+    .footnotes {
+       display :none;
     }
-  }
+    .footdef {
+       display :none;
+    }
+}
+    .smth {
+        font-size: 18px;
+        line-height: 22px;
+        margin-top: -5.8%;
+        /* margin-bottom: 16px; */
+        margin-right: -09%;
+        padding-left: 15px;
+        padding-bottom: 20px;
+        float: right;
+        clear: right;
+        position: relative;
+        vertical-align: baseline;
+        width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .smth p {
+        font-size: 14px;
+        text-align: left;
+        font-family: 'Arial Mono';
+    }
 
-
-
-p,
-dl,
-ol,
-ul {
-    font-size: 1.3rem;
-    line-height: 2rem;
+@media screen and (max-width:1089px) {
+    .smth {
+        display: none;
+    }
 }
 
 
-
-
-
-  pre {
-    overflow: auto;
-    margin: 1.2em;
-  word-break: break-word;
+pre.src {
+  position: relative;
   word-wrap: normal;
   overflow-x: auto;
   white-space: pre;
-  font-family: monospace;
-  font-size: 13px;
-  line-height: 1.3em;
-
-  }
-  pre.src {
-    position: relative;
-    word-wrap: normal;
-    overflow-x: auto;
-    white-space: pre;
-  }
-
-
-
-
-
-@media screen and (min-width: 1740px) {
-  p {
-  font-family: 'Tinos';
-  }
-  .propert, .tag  {
-    float: left;
-    clear: left;
-    margin-left: -24.6%;
-    width: 24%;
-    margin-top: 0.3rem;
-    margin-bottom: 0;
-    font-size: 1.1rem;
-    line-height: 1.1;
-    vertical-align: baseline;
-    position: relative;
-    padding-bottom: 20px;
-  }
 }
 
-
-@media screen and (max-width: 1740px)  and (min-width: 800px){
-  .propert, .tag  {
-    float: left;
-    clear: left;
-    margin-left: -14.6%;
-    width: 15%;
-    margin-top: 0.3rem;
-    margin-bottom: 0;
-    font-size: 1.1rem;
-    line-height: 1.1;
-    vertical-align: baseline;
-    position: relative;
-    padding-bottom: 20px;
-  }
-}
 
 
 @media screen and (min-width: 760px) {
-
-  p {
-            font-family: 'Tinos';
-  }
-
-  figcaption {
-    padding-left: 315px;
-    margin-left: -315px;
-    margin-top: 10px;
-    font-family: freight-sans-condensed-pro,Alegreya,serif;
-    font-size: 18px;
-    line-height: 22px;
-    border: 0;
-    border-top: 1px solid #c8b6b6;
-    border-bottom: 1px none #fdfefa;
-    padding-top: 2px;
-    text-align: left!important;
-    border-top: 1px solid #7a8a87;
-    z-index: 100;
-    font-family: freight-sans-condensed-pro,Alegreya,serif;
-    font-size: 18px;
-    line-height: 22px;
-    margin-top: 0;
-    margin-bottom: 16px;
-    float: right;
-    clear: right;
-    position: relative;
-    vertical-align: baseline;
-    margin-right: -303px;
-    width: 240px;
-  }
-
-
-  .PREVIEW  {
-    float: right;
-    clear: right;
-    margin-right: -10.6%;
-    width: 50%;
-    margin-top: 0.3rem;
-    margin-bottom: 0;
-    font-size: 1.1rem;
-    line-height: 1.1;
-    vertical-align: baseline;
-    position: relative;
-    padding-bottom: 20px;
-    border-top: 2px solid #2E3436;
-    border-bottom: 2px solid #2E3436;
-  }
-
-
-  .PREVIEW p, .propert p, .tag p {
-  text-align: start !important;
-  width: 70% !important;
-  }
-
-  h1 {
-    font-size: 62px !important;
-  }
+p {
+    text-align: justify;
+    unicode-bidi: plaintext;
 }
-
-
-h1 {
-  font-size: 32px;
+figcaption {
+    margin-top: 5%;
+    margin-left: 10%;
+    /* width: 40%; */
 }
-
-  .PREVIEW {
-    border-top: 2px solid #2E3436;
-    border-bottom: 2px solid #2E3436;
-  }
-
-
-  .PREVIEW p, .propert p, .tag p {
-  text-align: start !important;
-  font-family: 'Tinos';
-  }
-  .propert p  {
-    font-style: italic;
-  }
-
-
-
-
-
-
-  .figure-number {
+.figure-number {
     display: none;
-  }
+}
 
-
+}
 
 
 /* To get the pandoc-generated bibliography to match style, define csl classes. */
@@ -534,28 +189,67 @@ div.epigraph > blockquote > footer {
 div.epigraph > blockquote > footer > cite {
     font-style: italic;
 }
-/* end chapter epigraphs styles */
+.header img {
+    max-width: 100px;
+}
+
+.header a:link { text-decoration: none !important; }
+
+.header a {
+    border-bottom: none;
+}
+
+.header a:visited { text-decoration: none !important; }
+
+
+.header a:hover { text-decoration: none !important; }
+
+
+.header a:active { text-decoration: none !important; }
 
 
 
 
-blockquote {
-    margin-left: 1rem;
-    font-style: italic;
-    font-family: serif;
-    border-left: 3px solid;
-    border-left-color: currentcolor;
-    border-color: var(--text-color);
-    padding-left: 1em;
+table {
+  border-collapse: collapse;
+  border-spacing: 20px;
+  padding: 5px;
+}
+table td, table th {
+  border: 1px solid rgba(0, 0, 0, .5);
+  padding: 5px;
+
+}
+
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: normal;
+    text-align: -internal-center;
+}
+
+table tr:first-child th {
+  border-top: 0;
+  padding: 5px;
+
+}
+table tr:last-child td {
+  border-bottom: 0;
+  padding: 5px;
+}
+table tr td:first-child,
+table tr th:first-child {
+  border-left: 0;
+  padding: 5px;
+}
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 0;
+  padding: 5px;
 }
 
 
 
-
-
-.sidenote a, .footpara a {
-    word-break: break-all;
-}
 
 /* Style for the timestamp container */
 .timestamp-wrapper {
@@ -626,49 +320,22 @@ span.TODO {
 }
 
 
-@media screen and (min-width:800px) {
-.isso-input-wrapper {
-  display: block;
-  max-width: 100%;
-  margin: 0 0 .3em;
-}
-.isso-input-wrapper input {
-  width: 100%;
-}
-.isso-post-action {
-  margin-top: 0;
-}
+.PREVIEW {
+    font-style: italic;
+    color: gray;
 }
 
-
-.isso-input-wrapper {
-        display: block;
-        max-width: 100%;
-   margin: 0 0 .3em;
-}
-.isso-input-wrapper input {
-    width: 100%;
-}
-.isso-post-action {
-    margin-top: 0;
+.tag {
+    background-color: darkgray;
+    font-style: italic;
 }
 
-
-@media screen and (min-width:800px) {
-.isso-input-wrapper {
-  display: block;
-  max-width: 100%;
-  margin: 0 0 .3em;
-}
-.isso-input-wrapper input {
-  width: 100%;
-}
-.isso-post-action {
-  margin-top: 0;
+span.tag {
+    background-color: inherit !important;
+    font-style: inherit !important;
 }
 
-.isso-textarea {
- max-width: 55%;
-}
-
+.propert {
+    background-color: bisque;
+    font-style: italic;
 }

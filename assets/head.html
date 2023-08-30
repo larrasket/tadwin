@@ -1,41 +1,39 @@
-<meta name="theme-color" content="#ffffff">
-<meta charset="utf-8">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="theme-color" content="#ffffff">
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content=
+  "width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style/toc.css">
+  <link rel="stylesheet" href="/style/tufte.css">
+  <link rel="stylesheet" href="/style/main.css">
+  <script async data-id="101390423" src=
+  "//static.getclicky.com/js"></script> <noscript>
+  <p><img alt="Clicky" width="1" height="1" src=
+  "//in.getclicky.com/101390423ns.gif"></p></noscript>
+  <!-- <script> -->
+  <!--   window.onload = function() { -->
+  <!--     // get the current URL path -->
+  <!--     var path = window.location.pathname; -->
+  <!--     // select all navigation links -->
+  <!--     var links = document.querySelectorAll('#preamble .center li a'); -->
+  <!--     // iterate through each link and replace the link with a span if it matches the current path -->
+  <!--     links.forEach(function(link) { -->
+  <!--       // compare the link's href attribute with the current path -->
+  <!--       if (link.getAttribute('href') === path) { -->
+  <!--         var span = document.createElement('span'); -->
+  <!--         span.innerHTML = link.innerHTML; -->
+  <!--         span.classList.add('current'); -->
+  <!--         link.parentNode.replaceChild(span, link); -->
+  <!--       } -->
+  <!--     }); -->
+  <!--   }; -->
+  <!-- </script> -->
 
-
-
-<meta name="theme-color" content="#ffffff">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/style/toc.css"/>
-<link rel="stylesheet" href="/style/tufte.css"/>
-<link rel="stylesheet" href="/style/main.css"/>
-
-<script async data-id="101390423" src="//static.getclicky.com/js"></script>
-<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101390423ns.gif" /></p></noscript>
-
-<script>
-  window.onload = function() {
-    // get the current URL path
-    var path = window.location.pathname;
-
-    // select all navigation links
-    var links = document.querySelectorAll('#preamble .center li a');
-
-    // iterate through each link and replace the link with a span if it matches the current path
-    links.forEach(function(link) {
-      // compare the link's href attribute with the current path
-      if (link.getAttribute('href') === path) {
-        var span = document.createElement('span');
-        span.innerHTML = link.innerHTML;
-        span.classList.add('current');
-        link.parentNode.replaceChild(span, link);
-      }
-    });
-  };
-</script>
-
-<script>
-function toggleImage(link, src) {
+  <script>
+  function toggleImage(link, src) {
   var container = link.nextElementSibling;
   if (container.style.display === "none") {
     container.style.display = "block";
@@ -45,33 +43,37 @@ function toggleImage(link, src) {
     link.textContent = "Click here again to display it";
   }
   event.preventDefault();
-}
-</script>
+  }
+  </script>
+  <style>
+                .hide {
+                        display: none;
+                }
+  </style>
+  <script>
+                function hideDates() {
+                        var dates = document.querySelectorAll('p, i');
+                        for (var i = 0; i < dates.length; i++) {
+                                var dateRegex = /\(\d{4}\/\d{2}\/\d{2}\)/g;
+                                if (dateRegex.test(dates[i].innerHTML)) {
+                                        dates[i].innerHTML = dates[i].innerHTML.replace(dateRegex, '<span class="hide">$&</span>');
+                                }
+                        }
+                        document.getElementById("show-link").style.display = "inline";
+                        document.getElementById("hide-link").style.display = "none";
+                }
 
-	<style>
-		.hide {
-			display: none;
-		}
-	</style>
-	<script>
-		function hideDates() {
-			var dates = document.querySelectorAll('p, i');
-			for (var i = 0; i < dates.length; i++) {
-				var dateRegex = /\(\d{4}\/\d{2}\/\d{2}\)/g;
-				if (dateRegex.test(dates[i].innerHTML)) {
-					dates[i].innerHTML = dates[i].innerHTML.replace(dateRegex, '<span class="hide">$&</span>');
-				}
-			}
-			document.getElementById("show-link").style.display = "inline";
-			document.getElementById("hide-link").style.display = "none";
-		}
-
-		function showDates() {
-			var dates = document.getElementsByClassName("hide");
-			for (var i = 0; i < dates.length; i++) {
-				dates[i].style.display = "inline";
-			}
-			document.getElementById("hide-link").style.display = "inline";
-			document.getElementById("show-link").style.display = "none";
-		}
-	</script>
+                function showDates() {
+                        var dates = document.getElementsByClassName("hide");
+                        for (var i = 0; i < dates.length; i++) {
+                                dates[i].style.display = "inline";
+                        }
+                        document.getElementById("hide-link").style.display = "inline";
+                        document.getElementById("show-link").style.display = "none";
+                }
+  </script>
+  <title></title>
+</head>
+<body>
+</body>
+</html>

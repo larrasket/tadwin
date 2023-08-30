@@ -1,13 +1,13 @@
 @charset "UTF-8";
 
-@import url(https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Alegreya:ital,wght@0,400;0,700;1,400&family=Alegreya+SC&display=swap);body {
-    color: #333;
-    background-color: #fdfefa;
-    font-family: Alegreya,serif;
-    font-size: 18px;
-    line-height: 26px;
-    margin: 0
-}/* Tufte CSS styles */
+/* @import url(https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Alegreya:ital,wght@0,400;0,700;1,400&family=Alegreya+SC&display=swap);body { */
+/*     color: #333; */
+/*     background-color: #fdfefa; */
+/*     font-family: Alegreya,serif; */
+/*     font-size: 18px; */
+/*     line-height: 26px; */
+/*     margin: 0 */
+/* }/\* Tufte CSS styles *\/ */
 html {
     font-size: 14px;
 }
@@ -19,64 +19,11 @@ a {
 }
 
 body {
-    width: 87.5%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 12.5%;
-    font-family: Alegreya, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-    background-color: #fff;
-    color: #2e3436;
-    max-width: 1400px;
     counter-reset: sidenote-counter;
+    max-width: 55%;
+    margin-left: 4%;
 }
 
-h1 {
-    font-family: 'Linux Biolinum',sans-serif !important;
-    line-height: 1.3em;
-    text-transform: none;
-    border: none !important;
-
-
-
-}
-
-h2, h3, h4, h5, h6 {
-    text-transform: none;
-    font-family: 'Marcellus SC',sans-serif;
-    line-height: 1.3em;
-    font-weight: normal !important;
-    border: none !important;
-}
-
-h1 {
-    font-weight: bold;
-    margin-top: 4rem;
-    margin-bottom: 1.5rem;
-    font-size: 62px;
-
-}
-
-h2 {
-    font-weight: normal;
-}
-
-h3 {
-    font-weight: 400;
-    font-size: 1.7rem;
-    margin-top: 2rem;
-    margin-bottom: 1.4rem;
-}
-
-
-hr {
-    display: block;
-    height: 1px;
-    width: 55%;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-}
 
 p.subtitle {
     font-style: italic;
@@ -99,27 +46,18 @@ article {
 }
 
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1500px) {
 #content {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    width: 90% !important;
+    width: 70% !important;
 }
-}
+/* body { */
+/*     width: 60% !important; */
 
-
-#content {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+/* } */
 }
 
-
-p {
-    margin-top: 1.4rem;
-    margin-bottom: 1.4rem;
-    padding-right: 0;
-    vertical-align: baseline;
-}
 
 /* Chapter Epigraphs */
 div.epigraph {
@@ -145,36 +83,6 @@ div.epigraph > blockquote > footer > cite {
 }
 /* end chapter epigraphs styles */
 
-blockquote {
-    font-size: 1.4rem;
-}
-
-blockquote p {
-    width: 55%;
-    margin-right: 40px;
-}
-
-blockquote footer {
-    width: 55%;
-    font-size: 1.1rem;
-    text-align: right;
-}
-
-#content p,
-#content footer,
-#content table {
-    width: 55%;
-}
-
-li p { width: 100% !important }
-
-/* 50 + 5 == 55, to be the same width as paragraph */
-#content dl,
-#content ol,
-#content ul {
-    width: 55%;
-    /* -webkit-padding-start: 5%; */
-}
 
 dt:not(:first-child),
 li:not(:first-child) {
@@ -228,7 +136,7 @@ a:link::-moz-selection {
 
 /* Sidenotes, margin notes, figures, captions */
 img {
-    max-width: 100%;
+    max-width: 700px;
 }
 
 .sidenote,
@@ -261,7 +169,7 @@ img {
 
 .sidenote-number:after {
     content: counter(sidenote-counter);
-    font-size: 1rem;
+    font-size: 0.7rem;
     top: -0.5rem;
     left: 0.1rem;
 }
@@ -277,21 +185,6 @@ blockquote .marginnote {
     margin-right: -82%;
     min-width: 59%;
     text-align: left;
-}
-
-div.fullwidth,
-table.fullwidth {
-    width: 100%;
-}
-
-div.table-wrapper {
-    overflow-x: auto;
-    font-family: "Trebuchet MS", "Gill Sans", "Gill Sans MT", sans-serif;
-}
-
-.sans {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-    letter-spacing: .03em;
 }
 
 code, pre > code {
@@ -367,41 +260,17 @@ label.margin-toggle:not(.sidenote-number) {
 
 @media (max-width: 760px) {
     body {
-        width: 84%;
+        max-width: 100% !important;
         padding-left: 8%;
         padding-right: 8%;
-    }
-
-    hr,
-    #content p,
-    #content footer,
-    #content table {
-        width: 100%;
+        margin-left: auto !important;
     }
 
     pre > code {
         width: 97%;
     }
-
-    #content dl,
-    #content ol,
-    #content ul {
-        width: 90%;
-    }
-
     figure {
         max-width: 90%;
-    }
-
-
-    blockquote {
-        margin-left: 1.5em;
-        margin-right: 0em;
-    }
-
-    blockquote p,
-    blockquote footer {
-        width: 100%;
     }
 
     label.margin-toggle:not(.sidenote-number) {
@@ -437,4 +306,24 @@ label.margin-toggle:not(.sidenote-number) {
     img {
         width: 100%;
     }
+}
+
+
+
+
+  pre {
+    overflow: auto;
+    margin: 1.2em;
+  word-break: break-word;
+  word-wrap: normal;
+  overflow-x: auto;
+  white-space: pre;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.3em;
+
+  }
+
+.sidenote a, .footpara a {
+    word-break: break-all;
 }
