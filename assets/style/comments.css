@@ -6,7 +6,7 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    font-family: arial, inhert;
+    font-family: "BArial"
 }
 
 /* ========================================================================== */
@@ -380,7 +380,7 @@ isso-textrea, input:focus{
 }
 
 .isso-textarea {
- max-width: 55%;
+ /* max-width: 55%; */
 }
 
 

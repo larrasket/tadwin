@@ -5,7 +5,7 @@
 	</defs>
 	<style>
 		tspan { white-space:pre } 
-		.t0 { font-size: 67px;fill: #ffffff;font-weight: 700;font-family: "IBMPlexMono-Bold", "Arial",  "IBM Plex Mono" } 
+		.t0 { font-size: 67px;fill: #ffffff;font-weight: 700;font-family: "BArial", "Arial",  "IBM Plex Mono", Sans } 
 	</style>
 	<use id="Background" href="#img1" x="0" y="0"/>
 	<text id="The Mourner’s Bench" style="transform: matrix(1.291,0,0,1.291,14.709,257.477)" >

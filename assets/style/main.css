@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Arial Mono";
+  font-family: "BArial Mono";
   src: url("/style/arial_monospaced_mt.ttf") format("truetype");
   font-style: normal;
   font-weight: normal;
@@ -8,15 +8,15 @@
 
 
 @font-face {
-  font-family: "Arial";
-  src: url("/style/arial.ttf") format("truetype");
+  font-family: "BArial";
+  src: url("/style/arial/ARIAL.woff") format("woff");
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Arial";
-  src: url("/style/arial_bold.ttf") format("truetype");
+  font-family: "BArial";
+  src: url("/style/arial/ARIALBD.woff") format("woff");
   font-style: normal;
   font-weight: bold;
 }
@@ -72,7 +72,7 @@
 
 
 body {
-    font-family: 'Arial';
+    font-family: 'BArial';
 }
 
 p {
@@ -121,7 +121,7 @@ ul {
     .smth p {
         font-size: 14px;
         text-align: left;
-        font-family: 'Arial Mono';
+        font-family: 'BArial Mono';
     }
 
 @media screen and (max-width:1089px) {
@@ -338,4 +338,9 @@ span.tag {
 .propert {
     background-color: bisque;
     font-style: italic;
+}
+
+
+.inlinetask {
+  display: none;
 }
