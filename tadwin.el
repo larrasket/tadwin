@@ -9,6 +9,9 @@
 <script data-isso-css-url=\"https://lr0.fly.dev/style/comments.css\" data-isso-reply-notifications-default-enabled=\"true\" data-isso-vote=\"false\" data-isso=\"//salihcomments.fly.dev/\" src=\"//salihcomments.fly.dev/js/embed.min.js\"></script>")
 
 
+(use-package ox-html-stable-ids
+  :config
+  (org-html-stable-ids-add))
 
 
 (setq org-export-global-macros
@@ -267,6 +270,8 @@ information."
   (format "<div class=\"notes\"> %s </div>" content))
 
 (setq org-html-format-drawer-function 'org-drawerkk)
+
+(setq org-html-stable-ids t)
 
 (defun salih/set-org-publish-project-alist ()
   "Set publishing projects for Orgweb and Worg."
