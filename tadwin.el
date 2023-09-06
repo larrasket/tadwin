@@ -14,6 +14,24 @@
   (org-html-stable-ids-add))
 
 
+(advice-add 'org-html-stable-ids--get-reference :override
+            (lambda (orig-fun datum info)
+              (if org-html-stable-ids
+                  (let ((cache (plist-get info :internal-references))
+                        (id (org-html-stable-ids--extract-id datum))
+                        (RID (org-element-property :ID datum)))
+                    (if (org-roam-node-from-id RID) RID
+                      (or (car (rassq datum cache))
+                          (progn (while (assoc id cache)
+                                   (setq id (org-html--update-string-with-underscore id)))
+                                 (when id (push (cons id datum)
+                                                cache)
+                                       (plist-put info :internal-references cache)
+                                       id)))))
+
+                (funcall orig-fun datum info))))
+
+
 (setq org-export-global-macros
       '(("comments" . "(eval (salih/print-text-nodes))")
         ("dis" . "(eval (format \"* Comments \n #+begin_export html\n%s\n#+end_export\" isso-comments ))")
