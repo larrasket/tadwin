@@ -1,4 +1,5 @@
 #+DATE: July 6, 2017
+#+OPTIONS: toc:nil
 * Tadiwn — تدوين: blogging with elisp
 
 #+begin_quote
