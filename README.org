@@ -1,6 +1,5 @@
 #+DATE: July 6, 2017
 #+OPTIONS: toc:nil
-* Tadiwn — تدوين: blogging with elisp
 
 #+begin_quote
 Please *do note* that this software is not even a pre-alpha, it's just my
@@ -10,7 +9,7 @@ to build something similar, or it will work for you after some modifications.
 
 This repository holds code for my publishing system that I use for my [[https://lr0.fly.dev/][website]],
 written in elisp.
-** Requirements
+* Requirements
 + ~tadwin.el~ uses the ~doomscript~ executor to access emacs, thus it requires
   a [[https://github.com/doomemacs/doomemacs][doom emacs]] installation, however this can be modified easily to use a
   vanilla emacs instead.
@@ -18,7 +17,7 @@ written in elisp.
   each others, however this is can be dismissed too, but you will have to depend
   on hierarchical approach to organize your files, which often breaks.
   + You can use ~org-ids~ file to get around this you don't use org-roam.
-** Get Started
+* Get Started
 
 Clone the repository and edit [[file:assets/][assets/]] to match with your taste. Go through the
 [[file:tadwin.el]] file quickly to make sure it's adjusted to what you wish. Make
@@ -45,7 +44,7 @@ the posts directory you just created, then add:
 Where 26 is the number of the posts you want to include $\times 5 + 1$ (each post with date
 and preview requires 5 lines, and 1 line for org-offset) In this case it
 includes the first 5 posts.
-** Publishing
+* Publishing
 Publish the site by executing ~tadwin.el~:
 #+begin_src sh
 chmod +x tadwin.el
@@ -54,7 +53,7 @@ chmod +x tadwin.el
 This assumes that ~doomscript~ is in your ~$PATH~. It will create a ~public/~
 directory with your static website. You can publish it later using whatever
 service you wish, like [[https://fly.io/][fly.io]] or [[https://pages.github.com/][GitHub Pages]].
-** Tip for org-roam
+* Tip for org-roam
 If you wish sometimes to include the backlinks for a node that you have, you can
 add something like:
 
