@@ -1,4 +1,5 @@
 #!/usr/bin/env doomscript
+(provide 'tadwin)
 (require 'doom-start)
 (load "~/blog/id.el")
 
@@ -9,9 +10,12 @@
 <script data-isso-css-url=\"https://lr0.fly.dev/style/comments.css\" data-isso-reply-notifications-default-enabled=\"true\" data-isso-vote=\"false\" data-isso=\"//salihcomments.fly.dev/\" src=\"//salihcomments.fly.dev/js/embed.min.js\"></script>")
 
 
+(setq ess-ask-for-ess-directory nil)
 (use-package ox-html-stable-ids
   :config
   (org-html-stable-ids-add))
+
+
 
 
 (advice-add 'org-html-stable-ids--get-reference :override
