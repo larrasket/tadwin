@@ -295,6 +295,24 @@ information."
 
 (setq org-html-stable-ids t)
 
+
+(defun salih/org-html-publish-to-tufte-html (plist filename pub-dir)
+  "Make sure that the file is not already published befeore really publihing
+it."
+  (let ((html (let* ((org-inhibit-startup t)
+                     (visiting (find-buffer-visiting filename))
+                     (extension (concat "." (or (plist-get plist :html-extension)
+                                             org-html-extension
+                                             "html")))
+                     (work-buffer (or visiting (find-file-noselect filename))))
+                (unwind-protect
+                    (with-current-buffer work-buffer
+                      (org-export-output-file-name extension nil pub-dir))))))
+    (if (file-newer-than-file-p filename html)
+        (org-html-publish-to-tufte-html plist filename pub-dir))))
+
+
+
 (defun salih/set-org-publish-project-alist ()
   "Set publishing projects for Orgweb and Worg."
   (interactive)
@@ -327,7 +345,7 @@ information."
            :sitemap-style tree
            :with-toc nil
 
-           :publishing-function org-html-publish-to-tufte-html
+           :publishing-function salih/org-html-publish-to-tufte-html
            :exclude "\!.*\.org"
            :makeindex t
            :html-head-include-default-style nil)
