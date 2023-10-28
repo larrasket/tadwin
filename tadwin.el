@@ -38,6 +38,7 @@
 
 (setq org-export-global-macros
       '(("comments" . "(eval (salih/print-text-nodes))")
+        ("homecomments" . "(eval (salih/print-text-nodes t))")
         ("dis" . "(eval (format \"* Comments \n #+begin_export html\n%s\n#+end_export\" isso-comments ))")
         ("b" . "(eval (format \"#+begin_export html\n%s\n#+end_export\" (salih/print-back-links)))")
         ("t" . "(eval (concat \"This section was labeled under\"))")
@@ -158,12 +159,19 @@
         (timestamp2 (cdr (org-id-decode  (org-roam-node-id node2)))))
     (time-less-p  timestamp1 timestamp2)))
 
-(defun salih/print-text-nodes ()
-  (let* ((nodes (sort (salih/get-back-nodes (org-entry-get nil "ID" t) ) #'salih/compare-org-id))
+(defun salih/print-text-nodes (&optional first)
+  (let* ((nodes (sort (salih/get-back-nodes (if first
+                                                (org-roam-node-id
+                                                 (org-roam-node-from-title-or-alias
+                                                  "Commentary"))
+                                              (org-entry-get nil "ID" t)))
+                      #'salih/compare-org-id))
          (strings '()))
-    (while nodes (push (salih/mkinclude (car nodes))
-                       strings)
-           (setq nodes (cdr nodes)))
+    (if first
+        (push (salih/mkinclude (car (last nodes))) strings)
+      (while nodes (push (salih/mkinclude (car nodes))
+                         strings)
+             (setq nodes (cdr nodes))))
     (mapconcat 'identity strings "")))
 
 
@@ -175,6 +183,7 @@
     (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
             entry
             id)))
+
 
 
 
@@ -299,17 +308,25 @@ information."
 (defun salih/org-html-publish-to-tufte-html (plist filename pub-dir)
   "Make sure that the file is not already published befeore really publihing
 it."
-  (let ((html (let* ((org-inhibit-startup t)
-                     (visiting (find-buffer-visiting filename))
-                     (extension (concat "." (or (plist-get plist :html-extension)
-                                             org-html-extension
-                                             "html")))
-                     (work-buffer (or visiting (find-file-noselect filename))))
-                (unwind-protect
-                    (with-current-buffer work-buffer
-                      (org-export-output-file-name extension nil pub-dir))))))
-    (if (file-newer-than-file-p filename html)
-        (org-html-publish-to-tufte-html plist filename pub-dir))))
+  (let* ((rebuild nil)
+         (html (let* ((org-inhibit-startup t)
+                      (visiting (find-buffer-visiting filename))
+                      (salih/rebuild nil)
+                      (extension (concat "." (or (plist-get plist :html-extension)
+                                                 org-html-extension
+                                                 "html")))
+                      (work-buffer (or visiting (find-file-noselect filename))))
+                 (unwind-protect
+                     (with-current-buffer work-buffer
+                       (when (ignore-errors (buffer-local-value 'salih/rebuild work-buffer))
+                         (setq rebuild t))
+                       (progn
+                         (org-export-output-file-name extension nil pub-dir)))))))
+    (when (or (string-match ".*index.*" filename)
+              rebuild (file-newer-than-file-p filename html))
+      (org-html-publish-to-tufte-html plist filename pub-dir))))
+
+
 
 
 
