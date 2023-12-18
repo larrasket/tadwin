@@ -189,16 +189,28 @@
 
 
 
+(defun salih/length (l)
+  (let ((counter 0))
+    (while l
+      (when (and (car l) (cl-search "blog" (org-roam-node-file (car l))))
+        (setq counter (+ counter 1)))
+      (setq l (cdr l)))
+    counter))
+
+
 (defun salih/get-backlinks-html (&optional tag sh astr)
   (let* ((nodes (salih/get-back-nodes (org-entry-get nil "ID" t) tag sh))
          (strings '())
-         (counter (length nodes)))
+         (counter (salih/length nodes)))
     (while nodes (push (salih/org-string-to-html (salih/mkentity
                                                   (car nodes)
                                                   counter tag astr))
                        strings)
-           (setq nodes (cdr nodes)
-                 counter (- counter 1)))
+           (if (and (car nodes) (cl-search "blog" (org-roam-node-file (car nodes))))
+               (setq counter (- counter 1)))
+           (setq nodes (cdr nodes)))
+           
+                 
     (mapconcat 'identity strings "")))
 
 (defun salih/print-back-links (&optional tag)
@@ -369,7 +381,7 @@ it."
 
           ("blog-static"
            :base-directory "./content"
-           :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|svg\\|pdf\\|mp3\\|woff2\\|woff"
+           :base-extension "css\\|js\\|png\\|jpg\\|html\\|json\\|jpeg\\|gif\\|svg\\|pdf\\|mp3\\|woff2\\|woff"
            :publishing-directory "public"
            :recursive t
            :publishing-function org-publish-attachment)
