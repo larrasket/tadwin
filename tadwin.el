@@ -1,14 +1,16 @@
-#!/usr/bin/env doomscript
+#!/usr/bin/env /home/l/.emacs.db/bin/doomscript
 (provide 'tadwin)
 (require 'doom-start)
 (load "~/blog/id.el")
+
+
+
 
 (setq isso-comments
       "<section id=\"isso-thread\">
     <noscript>Javascript needs to be activated to view comments.</noscript>
 </section>
 <script data-isso-css-url=\"https://lr0.fly.dev/style/comments.css\" data-isso-reply-notifications-default-enabled=\"true\" data-isso-vote=\"false\" data-isso=\"//salihcomments.fly.dev/\" src=\"//salihcomments.fly.dev/js/embed.min.js\"></script>")
-
 
 (setq ess-ask-for-ess-directory nil)
 (use-package ox-html-stable-ids
@@ -38,6 +40,7 @@
 
 (setq org-export-global-macros
       '(("comments" . "(eval (salih/print-text-nodes))")
+        ("anth" . "(eval (salih/print-text-nodes-anth))")
         ("homecomments" . "(eval (salih/print-text-nodes t))")
         ("dis" . "(eval (format \"* Comments \n #+begin_export html\n%s\n#+end_export\" isso-comments ))")
         ("b" . "(eval (format \"#+begin_export html\n%s\n#+end_export\" (salih/print-back-links)))")
@@ -168,21 +171,38 @@
                       #'salih/compare-org-id))
          (strings '()))
     (if first
-        (push (salih/mkinclude (car (last nodes))) strings)
-      (while nodes (push (salih/mkinclude (car nodes))
+        (push (salih/mkinclude (car (last nodes)) nil) strings)
+      (while nodes (push (salih/mkinclude (car nodes) nil)
                          strings)
              (setq nodes (cdr nodes))))
     (mapconcat 'identity strings "")))
 
+(defun salih/print-text-nodes-anth ()
+  (let* ((nodes (sort (salih/get-back-nodes "3xedczc0i2k0")
+                      #'salih/compare-org-id))
+         (strings '()))
+    (while nodes (push (salih/mkinclude (car nodes) t)
+                       strings)
+           (setq nodes (cdr nodes)))
+    (mapconcat 'identity strings "")))
 
-(defun salih/mkinclude (node &optional astr)
+
+(defun salih/mkinclude (node remove-title &optional astr)
   (unless astr
     (setq astr "**"))
   (let* ((id (org-roam-node-id node))
-         (entry (org-roam-node-file (org-roam-node-from-id id))))
-    (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
+         (entry (org-roam-node-file (org-roam-node-from-id id)))
+         (cite (file-name-sans-extension (file-name-nondirectory entry))))
+    (if remove-title
+        (format "#+INCLUDE: \"%s::#%s\" :only-contents t\n\n\n \n/Derived from/ [cite:@%s]. Appeared: %s\n-----\n"
+                entry
+                id
+                cite
+                (format-time-string "%Y-%m-%d (%H:%M)" (cdr (org-id-decode  (org-roam-node-id node)))))
+                
+        (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
             entry
-            id)))
+            id))))
 
 
 

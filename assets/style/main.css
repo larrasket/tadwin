@@ -690,3 +690,7 @@ span.tag {
 /*   margin-right: 6px; */
 /*   float: left; */
 /* } */
+
+:target {
+  background-color: #ffa;
+}
