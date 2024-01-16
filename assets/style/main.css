@@ -472,6 +472,9 @@ ul {
   .smth {
     display: none;
   }
+  html {
+    font-size: 14px !important;
+  }
 }
 
 pre.src {
