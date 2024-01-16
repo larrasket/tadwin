@@ -194,10 +194,11 @@
          (entry (org-roam-node-file (org-roam-node-from-id id)))
          (cite (file-name-sans-extension (file-name-nondirectory entry))))
     (if remove-title
-        (format "#+INCLUDE: \"%s::#%s\" :only-contents t\n\n\n \n/Derived from/ [cite:@%s]. Appeared: %s\n-----\n"
+        (format "#+INCLUDE: \"%s::#%s\" :only-contents t\n\n\n \n/Derived from/ [cite:@%s], no. %d. Appeared: %s\n-----\n"
                 entry
                 id
                 cite
+                (first (read (cdr (assoc "NOTER_PAGE" (org-roam-node-properties node)))))
                 (format-time-string "%Y-%m-%d (%H:%M)" (cdr (org-id-decode  (org-roam-node-id node)))))
                 
         (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
