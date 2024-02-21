@@ -2,6 +2,7 @@
 (provide 'tadwin)
 (require 'doom-start)
 (load "~/blog/id.el")
+(load "~/blog/formats.el")
 
 
 
@@ -13,11 +14,11 @@
 <script data-isso-css-url=\"https://lr0.fly.dev/style/comments.css\" data-isso-reply-notifications-default-enabled=\"true\" data-isso-vote=\"false\" data-isso=\"//salihcomments.fly.dev/\" src=\"//salihcomments.fly.dev/js/embed.min.js\"></script>")
 
 (setq ess-ask-for-ess-directory nil)
-(use-package ox-html-stable-ids
-  :config
-  (org-html-stable-ids-add))
+;; (use-package ox-html-stable-ids
+;;   :config
+;;   (org-html-stable-ids-add))
 
-
+;; (setq org-html-stable-ids t)
 
 
 (advice-add 'org-html-stable-ids--get-reference :override
@@ -38,14 +39,6 @@
                 (funcall orig-fun datum info))))
 
 
-(setq org-export-global-macros
-      '(("comments" . "(eval (salih/print-text-nodes))")
-        ("anth" . "(eval (salih/print-text-nodes-anth))")
-        ("homecomments" . "(eval (salih/print-text-nodes t))")
-        ("dis" . "(eval (format \"* Comments \n #+begin_export html\n%s\n#+end_export\" isso-comments ))")
-        ("b" . "(eval (format \"#+begin_export html\n%s\n#+end_export\" (salih/print-back-links)))")
-        ("t" . "(eval (concat \"This section was labeled under\"))")
-        ("s" . "(eval (concat \"Part of a series on\"))")))
 
 
 (setq header (with-temp-buffer
@@ -134,24 +127,29 @@
     (setq astr "**"))
   (let* ((id (org-roam-node-id node))
          (entry (org-roam-node-file (org-roam-node-from-id id)))
-         (preview (if (salih/get-preview entry)
-                      (salih/get-preview entry)
-                    "")))
+         (lang (if node (salih/get-node-property node "LANG")))
+         (subtitle (if lang (salih/get-node-property node "SUBTITLE")))
+         (preview nil))
     (if (and (cl-search "blog" (org-roam-node-file node)) (not (cl-search "/t/" (org-roam-node-file node))))
         (if tag
-            (format "%s [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
+            (format "%s %s[[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n"
                     astr
+                    (if lang
+                       "*[Arabic]* "
+                     "")
                     id
-                    (org-roam-node-title node)
-                    (format-time-string "%a %d %b %Y" (salih/get-date entry))
-                    preview)
-          (format "%s %s. [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
+                    (if subtitle
+                        subtitle
+                      (org-roam-node-title node))
+                    (format-time-string "%a %d %b %Y" (salih/get-date entry)))
+                    
+          (format "%s %s. [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n"
                   astr
                   counter
                   id
                   (org-roam-node-title node)
-                  (format-time-string "%a %d %b %Y" (salih/get-date entry))
-                  preview))
+                  (format-time-string "%a %d %b %Y" (salih/get-date entry))))
+                  
       "")))
 
 
@@ -194,11 +192,11 @@
          (entry (org-roam-node-file (org-roam-node-from-id id)))
          (cite (file-name-sans-extension (file-name-nondirectory entry))))
     (if remove-title
-        (format "#+INCLUDE: \"%s::#%s\" :only-contents t\n\n\n \n/Derived from/ [cite:@%s], no. %d. Appeared: %s\n-----\n"
+        (format "#+INCLUDE: \"%s::#%s\" :only-contents t\n\n\n \n/Derived from/ [cite:@%s], no. %s. Appeared: %s\n-----\n"
                 entry
                 id
                 cite
-                (first (read (cdr (assoc "NOTER_PAGE" (org-roam-node-properties node)))))
+                (first (read (salih/get-node-property node "NOTER_PAGE")))
                 (format-time-string "%Y-%m-%d (%H:%M)" (cdr (org-id-decode  (org-roam-node-id node)))))
                 
         (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
@@ -206,6 +204,8 @@
             id))))
 
 
+(defun salih/get-node-property (node property)
+  (cdr (assoc property (org-roam-node-properties node))))
 
 
 
@@ -243,18 +243,20 @@
 
 
 (defun salih/get-preview (file)
-  (with-temp-buffer
-    (insert-file-contents file)
-    (goto-char (point-min))
-    (when (re-search-forward "^#\\+BEGIN_PREVIEW$" nil 1)
-      (goto-char (point-min))
-      (let ((beg (+ 1 (re-search-forward "^#\\+BEGIN_PREVIEW$" nil 1)))
-            (end (progn (re-search-forward "^#\\+END_PREVIEW$" nil 1)
-                        (match-beginning 0))))
-        (goto-char beg)
-        (while (search-forward "\n" end t)
-          (replace-match " " nil t))
-        (buffer-substring beg end)))))
+  (if t
+      nil
+    (with-temp-buffer
+     (insert-file-contents file)
+     (goto-char (point-min))
+     (when (re-search-forward "^#\\+BEGIN_PREVIEW$" nil 1)
+       (goto-char (point-min))
+       (let ((beg (+ 1 (re-search-forward "^#\\+BEGIN_PREVIEW$" nil 1)))
+             (end (progn (re-search-forward "^#\\+END_PREVIEW$" nil 1)
+                         (match-beginning 0))))
+         (goto-char beg)
+         (while (search-forward "\n" end t)
+           (replace-match " " nil t))
+         (buffer-substring beg end))))))
 
 (defun salih/delete-index (list)
   "Delete items containing the word 'index' from LIST."
@@ -282,16 +284,22 @@
 (defun salih/org-publish-org-sitemap-format (entry style project)
   "Custom sitemap entry formatting: add date"
   (cond ((not (directory-name-p entry))
-         (let ((preview (if (salih/get-preview (concat "content/" entry))
-                            (salih/get-preview (concat "content/" entry))
-                          "(No preview)")))
-           (format "[[file:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n%s"
+         (let* ((preview nil)
+                (title (org-publish-find-title entry project))
+                (node (org-roam-node-from-title-or-alias title))
+                (lang (if node (salih/get-node-property node "LANG")))
+                (subtitle (if lang (salih/get-node-property node "SUBTITLE"))))
+           (format "%s[[file:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n"
+                   (if lang
+                       "*[Arabic]* "
+                     "")
                    entry
-                   (org-publish-find-title entry project)
-
+                   (if subtitle
+                       subtitle
+                     title)
                    (format-time-string "%a %d %b %Y" (org-publish-find-date entry
-                                                                            project))
-                   preview)))
+                                                                            project)))))
+                   
         ((eq style 'tree)
          (file-name-nondirectory (directory-file-name entry)))
         (t entry)))
@@ -335,7 +343,6 @@ information."
 
 (setq org-html-format-drawer-function 'org-drawerkk)
 
-(setq org-html-stable-ids t)
 
 
 (defun salih/org-html-publish-to-tufte-html (plist filename pub-dir)

@@ -9,14 +9,9 @@
 /*     margin: 0 */
 /* }/\* Tufte CSS styles *\/ */
 html {
-  font-size: 15px;
+  /* font-size: 15px; */
 }
 
-a {
-  text-decoration: none;
-  color: #333;
-  border-bottom: 1px dotted #000;
-}
 
 body {
   counter-reset: sidenote-counter;
@@ -97,11 +92,6 @@ figure {
   margin: 0 0 3em 0;
 }
 
-/* Links: replicate underline that clears descenders */
-a:link,
-a:visited {
-  color: inherit;
-}
 
 .no-tufte-underline:link {
   background: unset;
@@ -331,5 +321,5 @@ pre {
 
 .sidenote a,
 .footpara a {
-  /* word-break: break-all; */
+  word-break: break-all;
 }
