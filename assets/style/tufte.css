@@ -166,10 +166,11 @@ img {
 }
 
 .sidenote-number:after {
-  content: counter(sidenote-counter);
-  font-size: 0.7rem;
-  top: -0.5rem;
-  left: 0.1rem;
+    content: "[ " counter(sidenote-counter) " ]";
+    font-size: 0.7rem;
+    top: -0.5rem;
+    left: 0.1rem;
+    color: blue;
 }
 
 .sidenote:before {

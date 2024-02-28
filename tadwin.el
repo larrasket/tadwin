@@ -327,7 +327,7 @@ CONTENTS is nil.  INFO is a plist holding contextual
 information."
   (let* ((ts (org-timestamp-translate timestamp))
          (time (apply #'encode-time (org-parse-time-string ts)))
-         (formatted-time (format-time-string "%A, %e %B %Y (%H:%M)" time)))
+         (formatted-time (format-time-string "[%Y-%m-%d %a %H:%M]" time)))
     (format "<span class=\"timestamp-wrapper\"><span class=\"timestamp\">%s</span></span>"
             (replace-regexp-in-string "--" "&#x2013;" formatted-time))))
 
@@ -348,7 +348,7 @@ information."
 (defun salih/org-html-publish-to-tufte-html (plist filename pub-dir)
   "Make sure that the file is not already published befeore really publihing
 it."
-  (let* ((rebuild nil)
+  (let* ((rebuild t)
          (html (let* ((org-inhibit-startup t)
                       (visiting (find-buffer-visiting filename))
                       (salih/rebuild nil)

@@ -2,23 +2,10 @@
 <head>
 <style>
 
-body {
-    font-family: 'Amiri', "BArial", "Arial", Sans !important;
-}
-
 p,h1,h2,h3,h4,h5,h6,h7,h8 {
     text-align: justify;
-    margin-left: ;
     unicode-bidi: plaintext !important;
     line-height: 1.4;
-}
-
-.sidenote-number:after {
-  content: "[ " counter(sidenote-counter) " ]";
-  font-size: 0.7rem;
-  top: -0.5rem;
-  left: 0.1rem;
-  color: blue;
 }
 
 span.sidenote {
