@@ -19,6 +19,23 @@
 ;; (setq org-html-stable-ids t)
 
 
+
+(defun salih/recents (d)
+  (if d
+      (s-replace-all '(("class=\"outline" . "class=\"recents")
+                       ("<h2 id=\"posts\">Posts</h2>" .
+                        "<h2> <a href=\"stack.html\">Top of My Stack</a> </h2> "))
+                     (salih/org-string-to-html
+                      (salih/org-get-subtree-as-org-string
+                       "~/blog/content/stack.org" "Posts")))
+    (s-replace-all '(("class=\"outline" . "class=\"footrecents")
+                     ("<h2 id=\"posts\">Posts</h2>" .
+                      "<h2> <a href=\"stack.html\">Top of My Stack</a> </h2>"))
+                 (salih/org-string-to-html
+                  (salih/org-get-subtree-as-org-string
+                   "~/blog/content/stack.org" "Posts")))))
+  
+
 (advice-add 'org-html-stable-ids--get-reference :override
             (lambda (orig-fun datum info)
               (if org-html-stable-ids
@@ -206,6 +223,24 @@
   (cdr (assoc property (org-roam-node-properties node))))
 
 
+(defun salih/org-get-subtree-as-org-string (file-path heading)
+  "Get the content of the subtree under a given HEADING in the Org file at FILE-PATH as an Org string."
+  (with-temp-buffer
+    ;; Load the Org file
+    (insert-file-contents file-path)
+    (org-mode)
+    (goto-char (point-min))
+    ;; Search for the specified heading
+    (if (re-search-forward (concat "^\\*+ " (regexp-quote heading)) nil t)
+        (let ((start (line-beginning-position))
+              (end (progn
+                     ;; Move to the next heading at the same level or higher
+                     (org-end-of-subtree t t)
+                     (point))))
+          ;; Return the substring between start and end
+          (buffer-substring-no-properties start end))
+      (error "Heading '%s' not found in %s" heading file-path))))
+
 
 
 (defun salih/length (l)
@@ -215,6 +250,12 @@
         (setq counter (+ counter 1)))
       (setq l (cdr l)))
     counter))
+
+
+
+(defun salih/include-recents ()
+  (salih/org-string-to-html (org-export-expand-include-keyword)))
+
 
 
 (defun salih/get-backlinks-html (&optional tag sh astr)
@@ -364,7 +405,7 @@ it."
                        (progn
                          (org-export-output-file-name extension nil pub-dir)))))))
     (when (or (string-match ".*index.*" filename)
-              rebuild (file-newer-than-file-p filename html))
+              t (file-newer-than-file-p filename html))
       (org-html-publish-to-tufte-html plist filename pub-dir))))
 
 

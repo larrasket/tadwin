@@ -1,5 +1,51 @@
-<div class="header">
-  <h3><a href="/"><img src="/style/ibm.svg"></a></h3>
-  <!-- /* <h4>Thoughts and links about programming, */ -->
-  <!-- /*   by <a href="https://swtch.com/~rsc/" rel="author">Russ Cox</a> </h4> */ -->
-</div>
+<noscript>
+    <div class="header">
+      <h3><a href="/">
+        <img src="/style/ibm.svg" style="max-width: 100px;">
+      </a></h3>
+    </div>
+  </noscript>
+
+  <div id="dynamic-header"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var header;
+      var path = window.location.pathname;
+
+      if (path.startsWith("/p/") || path.startsWith("/sh/") || path.startsWith("/s/") || path.startsWith("/d/")) {
+        header = `
+          <div class="header">
+            <h3>
+              <a href="/">
+                <img id="random-image" alt="Random Image" style="border: black; border-width: medium; border-style: double;">
+              </a>
+              <h1 style="font-size: medium; color: black; margin-block-start: 0em;">
+                <a href="/">
+                  <small style="font-size: x-small; font-style: italic;">(tap art for home)</small>
+                  <small style="font-size: x-small; font-style: italic;"></small>
+                </a>
+                <small style="font-size: x-small; font-style: italic;">also see; <a href="/p/">posts archive</a>, <a href="/stack.html">top of my stack</a></small>
+              </h1>
+            </h3>
+          </div>
+        `;
+        // Set the random image src after the header is inserted
+        setTimeout(function() {
+          document.getElementById('random-image').src = '/style/' + Math.ceil(Math.random() * 5) + '.png';
+        }, 0);
+      } else {
+        header = `
+          <div class="header">
+            <h3>
+              <a href="/"><img src="/style/ibm.svg" style="max-width: 100px;"></a>
+            </h3>
+          </div>
+        `;
+      }
+
+      var dynamicHeader = document.getElementById('dynamic-header');
+      dynamicHeader.innerHTML = header;
+      dynamicHeader.style.display = 'block';
+    });
+  </script>

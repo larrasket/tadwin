@@ -154,7 +154,7 @@ div.epigraph > blockquote > footer > cite {
   font-style: italic;
 }
 .header img {
-  max-width: 100px;
+  /* max-width: 100px; */
 }
 
 .header a:link {
@@ -342,7 +342,15 @@ li:has(> a:target) {
 }
 
 
-.recents {
+.recents-2 {
+  display: none;
+}
+
+
+
+@media screen and (min-width: 1500px) {
+.recents-2 {
+    display: block !important;
     float: right;
     clear: right;
     margin-right: -80%;
@@ -354,4 +362,8 @@ li:has(> a:target) {
     position: relative;
     padding-bottom: 10px;
     word-spacing: -2px;
+}
+.footrecents-2{
+  display: none;
+}
 }
