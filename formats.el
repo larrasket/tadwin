@@ -7,8 +7,12 @@ h1:before {
     font-size: 14px;
 }
 
+
 h1 b, h2 b, h3 b, h4 b {
-    font-weight: normal;
+    background: teal;
+    padding: 1px 9px;
+    font-weight: bold;
+    color: white;
     font-size: small;
 }
 

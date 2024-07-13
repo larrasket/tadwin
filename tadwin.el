@@ -1,10 +1,8 @@
-#!/usr/bin/env /home/l/.emacs.db/bin/doomscript
+#!/usr/bin/env /home/l/.emacs.d/bin/doomscript
 (provide 'tadwin)
 (require 'doom-start)
 (load "~/blog/id.el")
 (load "~/blog/formats.el")
-
-
 
 
 (setq isso-comments
@@ -135,7 +133,7 @@
             (format "%s %s[[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n"
                     astr
                     (if lang
-                       "*[Arabic]* "
+                       "*Arabic* "
                      "")
                     id
                     (if subtitle
@@ -196,7 +194,7 @@
                 entry
                 id
                 cite
-                (first (read (salih/get-node-property node "NOTER_PAGE")))
+                (substring (first (s-split " " (salih/get-node-property node "NOTER_PAGE"))) 1)
                 (format-time-string "%Y-%m-%d (%H:%M)" (cdr (org-id-decode  (org-roam-node-id node)))))
                 
         (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
@@ -291,7 +289,7 @@
                 (subtitle (if lang (salih/get-node-property node "SUBTITLE"))))
            (format "%s[[file:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n"
                    (if lang
-                       "*[Arabic]* "
+                       "*Arabic* "
                      "")
                    entry
                    (if subtitle
@@ -339,7 +337,10 @@ information."
 (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
 
 (defun org-drawerkk (name content)
-  (format "<div class=\"notes\"> %s </div>" content))
+  (if (s-equals? name "REVIEW_DATA")
+      ""
+    (format "<div class=\"notes\"> %s </div>" content)))
+  
 
 (setq org-html-format-drawer-function 'org-drawerkk)
 
@@ -348,7 +349,7 @@ information."
 (defun salih/org-html-publish-to-tufte-html (plist filename pub-dir)
   "Make sure that the file is not already published befeore really publihing
 it."
-  (let* ((rebuild t)
+  (let* ((rebuild nil)
          (html (let* ((org-inhibit-startup t)
                       (visiting (find-buffer-visiting filename))
                       (salih/rebuild nil)

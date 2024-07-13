@@ -50,6 +50,7 @@ body {
 
 
 p {
+  unicode-bidi: plaintext;
   line-height: 1.2;
 }
 
@@ -216,7 +217,6 @@ table tr th:last-child {
 /* Style for the timestamp container */
 .timestamp-wrapper {
   color: #004aa2;
-  font-size: smaller;
 }
 
 .timestamp {
@@ -339,4 +339,19 @@ li:has(> a:target) {
 
 .notes {
   margin-top: -15px;
+}
+
+
+.recents {
+    float: right;
+    clear: right;
+    margin-right: -80%;
+    width: 70%;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+    line-height: 1.3;
+    vertical-align: baseline;
+    position: relative;
+    padding-bottom: 10px;
+    word-spacing: -2px;
 }
