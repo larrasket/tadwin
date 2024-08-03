@@ -223,8 +223,9 @@
   (cdr (assoc property (org-roam-node-properties node))))
 
 
-(defun salih/org-get-subtree-as-org-string (file-path heading)
-  "Get the content of the subtree under a given HEADING in the Org file at FILE-PATH as an Org string."
+(defun salih/org-get-subtree-as-org-string (file-path heading &optional limit)
+  "Get the content of the subtree under a given HEADING in the Org file at FILE-PATH as an Org string.
+If LIMIT is provided, only get up to that number of subheadings."
   (with-temp-buffer
     ;; Load the Org file
     (insert-file-contents file-path)
@@ -232,13 +233,28 @@
     (goto-char (point-min))
     ;; Search for the specified heading
     (if (re-search-forward (concat "^\\*+ " (regexp-quote heading)) nil t)
-        (let ((start (line-beginning-position))
-              (end (progn
-                     ;; Move to the next heading at the same level or higher
-                     (org-end-of-subtree t t)
-                     (point))))
-          ;; Return the substring between start and end
-          (buffer-substring-no-properties start end))
+        (let* ((element (org-element-at-point))
+               (start (progn
+                        (forward-line 1) ;; Skip the main heading line
+                        (point)))
+               (end (org-end-of-subtree t t))
+               (limit (or limit most-positive-fixnum))
+               (count 0)
+               (subtree-content ""))
+          ;; Collect the subheadings within the limit
+          (goto-char start)
+          (while (and (< count limit)
+                      (re-search-forward (concat "^\\*\\{2,\\} ") end t))
+            (let* ((subtree-element (org-element-at-point))
+                   (subtree-start (org-element-property :begin subtree-element))
+                   (subtree-end (progn
+                                  (org-end-of-subtree t t)
+                                  (point))))
+              (setq count (1+ count))
+              (setq subtree-content
+                    (concat subtree-content (buffer-substring-no-properties subtree-start subtree-end)))))
+          ;; Return the collected content
+          subtree-content)
       (error "Heading '%s' not found in %s" heading file-path))))
 
 
