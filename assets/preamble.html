@@ -1,54 +1,12 @@
-  <noscript>
-    <div class="header">
-      <h3><a href="/">
-        <img src="/style/ibm.svg" style="max-width: 100px;">
-      </a></h3>
-    </div>
-  </noscript>
-
-  <div id="dynamic-header"></div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var header;
-      var path = window.location.pathname;
-
-      // Regular expression to check the path conditions
-      var regex = /^(\/(p|sh|s|d)\/(?!index\.html).+)/;
-
-      if (regex.test(path)) {
-        header = `
+<div id="dynamic-header" style="display: block;">
           <div class="header">
-            <h3>
-              <a href="/">
-                <img id="random-image" alt="Random Image" style="border: black; border-width: medium; border-style: double;">
-              </a>
-              <h1 style="font-size: medium; color: black; margin-block-start: 0em;">
+            <h1 style="font-size: medium;color: black;margin-block-start: 0em;font-weight: normal;margin-block-end: -0.5em;">
                 <a href="/">
-                  <small style="font-size: x-small; font-style: italic;">(tap art for home)</small>
+                  <small style="font-size: x-small; font-style: italic;">(tap for home)</small>
                   <small style="font-size: x-small; font-style: italic;"></small>
                 </a>
                 <small style="font-size: x-small; font-style: italic;">also see; <a href="/p/">posts archive</a>, <a href="/stack.html">top of my stack</a></small>
               </h1>
-            </h3>
-          </div>
-        `;
-        // Set the random image src after the header is inserted
-        setTimeout(function() {
-          document.getElementById('random-image').src = '/style/' + Math.ceil(Math.random() * 6) + '.png';
-        }, 0);
-      } else {
-        header = `
-          <div class="header">
-            <h3>
-              <a href="/"><img src="/style/ibm.svg" style="max-width: 100px;"></a>
-            </h3>
-          </div>
-        `;
-      }
 
-      var dynamicHeader = document.getElementById('dynamic-header');
-      dynamicHeader.innerHTML = header;
-      dynamicHeader.style.display = 'block';
-    });
-  </script>
+          </div>
+        </div>
