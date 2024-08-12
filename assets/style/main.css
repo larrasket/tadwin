@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Lotus-Light';
+  src: url('fonts/Lotus-Light.eot');
+  src: url('fonts/Lotus-Light.woff2') format('woff2'),
+       url('fonts/Lotus-Light.woff') format('woff'),
+       url('fonts/Lotus-Light.ttf') format('truetype'),
+       url('fonts/Lotus-Light.svg#Lotus-Light') format('svg'),
+       url('fonts/Lotus-Light.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 
 h2,h3,h4,h5,h6,h7,h8 {
     font-weight: normal;
@@ -45,7 +59,7 @@ a {
 
 
 body {
-  font-family: 'Arimo', 'Amiri', Sans;
+  font-family: 'Arimo', 'Lotus-Light', Sans;
 }
 
 
@@ -398,3 +412,5 @@ li:has(> a:target) {
   display: none;
 }
 }
+
+
