@@ -348,13 +348,44 @@ li:has(> a:target) {
 
 
 
+@media screen and (max-width: 1999px) {
+.recents-2 {
+  display: none;
+}
+.footrecents-2{
+  display: none;
+}
+}
+
+
+@media screen and (min-width: 1201px) {
+.recents-2 {
+    display: block !important;
+    float: right;
+    clear: right;
+    margin-right: -50%;
+    width: 44%;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+    line-height: 1.3;
+    vertical-align: baseline;
+    position: relative;
+    padding-bottom: 10px;
+    word-spacing: -2px;
+}
+.footrecents-2{
+  display: none;
+}
+}
+
+
 @media screen and (min-width: 1500px) {
 .recents-2 {
     display: block !important;
     float: right;
     clear: right;
     margin-right: -80%;
-    width: 70%;
+    width: 75%;
     margin-top: 0.3rem;
     margin-bottom: 0;
     line-height: 1.3;
