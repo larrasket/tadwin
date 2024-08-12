@@ -151,7 +151,7 @@ img {
   vertical-align: baseline;
   position: relative;
   padding-bottom: 10px;
-  word-spacing: -2px;
+  /* word-spacing: -2px; */
 }
 
 .sidenote-number {
