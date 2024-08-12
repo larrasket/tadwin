@@ -407,7 +407,7 @@ it."
                        (progn
                          (org-export-output-file-name extension nil pub-dir)))))))
     (when (or (string-match ".*index.*" filename)
-              t (file-newer-than-file-p filename html))
+              rebuild (file-newer-than-file-p filename html))
       (org-html-publish-to-tufte-html plist filename pub-dir))))
 
 
