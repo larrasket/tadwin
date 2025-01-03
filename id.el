@@ -1,4 +1,4 @@
-(require 'ox-tufte)
+;; (require 'ox-tufte)
 (require 'org)
 (require 'ox-publish)
 (require 'org-macs)

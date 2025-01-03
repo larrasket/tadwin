@@ -12,7 +12,6 @@ html {
   /* font-size: 15px; */
 }
 
-
 body {
   counter-reset: sidenote-counter;
   max-width: 55%;
@@ -59,11 +58,18 @@ div.epigraph {
 div.epigraph > blockquote {
   margin-top: 0em;
   margin-bottom: 0em;
+  padding-left: 10px;
+  margin: 10px 0;
+  color: #333;
+  border: 0.2px dashed #ccc;
+  padding-right: 10px;
+
+  background: rgb(0 0 0 / 3%);
 }
 
 div.epigraph > blockquote,
 div.epigraph > blockquote > p {
-  font-style: italic;
+  /* font-style: italic; */
 }
 
 div.epigraph > blockquote > footer {
@@ -91,7 +97,6 @@ figure {
   -webkit-margin-end: 0;
   margin: 0 0 3em 0;
 }
-
 
 .no-tufte-underline:link {
   background: unset;
@@ -166,11 +171,11 @@ img {
 }
 
 .sidenote-number:after {
-    content: "[ " counter(sidenote-counter) " ]";
-    font-size: 0.7rem;
-    top: -0.5rem;
-    left: 0.1rem;
-    color: blue;
+  content: "[ " counter(sidenote-counter) " ]";
+  font-size: 0.7rem;
+  top: -0.5rem;
+  left: 0.1rem;
+  color: blue;
 }
 
 .sidenote:before {

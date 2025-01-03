@@ -4,20 +4,7 @@
 (load "~/blog/id.el")
 (load "~/blog/formats.el")
 
-
-(setq isso-comments
-      "<section id=\"isso-thread\">
-    <noscript>Javascript needs to be activated to view comments.</noscript>
-</section>
-<script data-isso-css-url=\"https://lr0.fly.dev/style/comments.css\" data-isso-reply-notifications-default-enabled=\"true\" data-isso-vote=\"false\" data-isso=\"//salihcomments.fly.dev/\" src=\"//salihcomments.fly.dev/js/embed.min.js\"></script>")
-
 (setq ess-ask-for-ess-directory nil)
-;; (use-package ox-html-stable-ids
-;;   :config
-;;   (org-html-stable-ids-add))
-
-;; (setq org-html-stable-ids t)
-
 
 
 (defun salih/recents (d)
@@ -34,7 +21,7 @@
                  (salih/org-string-to-html
                   (salih/org-get-subtree-as-org-string
                    "~/blog/content/stack.org" "Posts")))))
-  
+
 
 (advice-add 'org-html-stable-ids--get-reference :override
             (lambda (orig-fun datum info)
@@ -52,8 +39,6 @@
                                        id)))))
 
                 (funcall orig-fun datum info))))
-
-
 
 
 (setq header (with-temp-buffer
@@ -157,14 +142,19 @@
                         subtitle
                       (org-roam-node-title node))
                     (format-time-string "%a %d %b %Y" (salih/get-date entry)))
-                    
-          (format "%s %s. [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n"
+
+          (format "%s %s. %s [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n"
                   astr
                   counter
+                  (if lang
+                       "*Arabic* "
+                     "")
                   id
-                  (org-roam-node-title node)
+                  (if subtitle
+                        subtitle
+                      (org-roam-node-title node))
                   (format-time-string "%a %d %b %Y" (salih/get-date entry))))
-                  
+
       "")))
 
 
@@ -211,9 +201,9 @@
                 entry
                 id
                 cite
-                (substring (first (s-split " " (salih/get-node-property node "NOTER_PAGE"))) 1)
+                (substring (cl-first (s-split " " (salih/get-node-property node "NOTER_PAGE"))) 1)
                 (format-time-string "%Y-%m-%d (%H:%M)" (cdr (org-id-decode  (org-roam-node-id node)))))
-                
+
         (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
             entry
             id))))
@@ -271,15 +261,16 @@
            (if (and (car nodes) (cl-search "blog" (org-roam-node-file (car nodes))))
                (setq counter (- counter 1)))
            (setq nodes (cdr nodes)))
-           
-                 
+
+
     (mapconcat 'identity strings "")))
 
 (defun salih/print-back-links (&optional tag)
-  (concat (salih/get-backlinks-html tag nil) "\n" (let ((shorts
-                                                         (salih/get-backlinks-html tag t "")))
-                                                    (unless (equal shorts "")
-                                                      (concat (salih/org-string-to-html "** Short Posts") "\n" shorts)))))
+  (concat (salih/get-backlinks-html tag nil) "\n"
+          (let ((shorts
+                 (salih/get-backlinks-html tag t "")))
+            (unless (equal shorts "")
+              (concat (salih/org-string-to-html "** Short Posts") "\n" shorts)))))
 
 
 
@@ -340,7 +331,7 @@
                      title)
                    (format-time-string "%a %d %b %Y" (org-publish-find-date entry
                                                                             project)))))
-                   
+
         ((eq style 'tree)
          (file-name-nondirectory (directory-file-name entry)))
         (t entry)))
@@ -383,7 +374,7 @@ information."
   (if (s-equals? name "REVIEW_DATA")
       ""
     (format "<div class=\"notes\"> %s </div>" content)))
-  
+
 
 (setq org-html-format-drawer-function 'org-drawerkk)
 

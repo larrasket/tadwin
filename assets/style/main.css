@@ -1,9 +1,12 @@
-
-h2,h3,h4,h5,h6,h7,h8 {
-    font-weight: normal;
+h2,
+h3,
+h4,
+h5,
+h6,
+h7,
+h8 {
+  font-weight: normal;
 }
-
-
 
 a:link,
 a:visited {
@@ -11,43 +14,38 @@ a:visited {
 }
 
 .smth p::before {
-    content: "(";
+  content: "(";
 }
 
 .smth p::after {
-    content: ")";
+  content: ")";
 }
 
 .tag a {
-    color: blue; 
-    text-transform: lowercase;
+  color: blue;
+  text-transform: lowercase;
 
-    /* font-style: ital; */
+  /* font-style: ital; */
 }
-
 
 .tag a:after {
-    color: khaki; 
-    content: ' ]';
+  color: #ff0101;
+  content: " ]";
 }
-
 
 .tag a:before {
-    color: khaki; 
-    content: '[ ';
+  color: #ff0101;
+  content: "[ ";
 }
-
 
 a {
   text-decoration: none;
   /* border-bottom: 1px dotted #000; */
 }
 
-
 body {
-  font-family: 'Arimo', 'Amiri', Sans;
+  font-family: "Arimo", "Amiri", Sans;
 }
-
 
 p {
   unicode-bidi: plaintext;
@@ -80,7 +78,6 @@ ul {
   text-decoration: underline dotted;
 }
 
-
 .smth {
   margin-left: 3px;
 }
@@ -95,8 +92,6 @@ ul {
   html {
     font-size: 14px !important;
   }
-
-
 }
 
 pre.src {
@@ -277,39 +272,61 @@ span.TODO {
 }
 
 .tag {
-  background-color: darkgray;
-  font-style: italic;
+  border-bottom: 1px dashed #0074ff;
+  background: rgb(190 215 255 / 10%);
+  padding-top: 0.2px;
+  padding-left: 9px;
+  font-size: 0.9em;
+  color: #333;
 }
 
 span.tag {
-    background-color: inherit !important;
-    font-size: small;
-    color: darkgray;
-    font-style: normal !important;
-    font-weight: bold;
+  background-color: inherit !important;
+  font-size: small;
+  color: darkgray;
+  font-style: normal !important;
+  font-weight: bold;
 }
 
-
 span.tag::after {
-  content: ' ]';
+  content: " ]";
   font-size: smaller;
   color: black;
 }
 
 span.tag::before {
-  content: '[ ';
+  content: "[ ";
   color: black;
   font-size: smaller;
 }
 
 .propert {
-  background-color: bisque;
-  font-style: italic;
+  background-color: rgba(255, 228, 196, 0.12);
+  border-bottom: 1px dashed #ff7a00;
+  padding-top: 0.2px;
+  padding-left: 9px;
+  font-size: 0.9em;
+  color: #333;
+}
+
+.propert a {
+  color: blue;
+  /* font-weight: bold; */
 }
 
 .postscript {
-  background-color: #cbe3e6;
-  font-style: italic;
+  background-color: rgba(255, 240, 245, 0.13);
+  border-bottom: 1px dashed #d4006e;
+  padding-top: 0.2px;
+  padding-left: 9px;
+  font-size: 0.9em;
+  color: #333;
+}
+
+.postscript a {
+  color: blue;
+  /* text-transform: lowercase; */
+  /* font-weight: bold; */
 }
 
 .inlinetask {
@@ -341,25 +358,21 @@ li:has(> a:target) {
   margin-top: -15px;
 }
 
-
 .recents-2 {
   display: none;
 }
-
-
 
 @media screen and (max-width: 1999px) {
-.recents-2 {
-  display: none;
+  .recents-2 {
+    display: none;
+  }
+  .footrecents-2 {
+    display: none;
+  }
 }
-.footrecents-2{
-  display: none;
-}
-}
-
 
 @media screen and (min-width: 1201px) {
-.recents-2 {
+  .recents-2 {
     display: block !important;
     float: right;
     clear: right;
@@ -372,15 +385,14 @@ li:has(> a:target) {
     position: relative;
     padding-bottom: 10px;
     word-spacing: -2px;
+  }
+  .footrecents-2 {
+    display: none;
+  }
 }
-.footrecents-2{
-  display: none;
-}
-}
-
 
 @media screen and (min-width: 1500px) {
-.recents-2 {
+  .recents-2 {
     display: block !important;
     float: right;
     clear: right;
@@ -393,8 +405,51 @@ li:has(> a:target) {
     position: relative;
     padding-bottom: 10px;
     word-spacing: -2px;
+  }
+  .footrecents-2 {
+    display: none;
+  }
 }
-.footrecents-2{
-  display: none;
+
+.resright,
+.profile {
+  display: block;
+  float: left;
+  clear: both;
+  padding: 10px;
+  max-width: 300px;
 }
+/* body { */
+/*   font-family: Pragmatapro; */
+/* } */
+/* h1, */
+/* h2, */
+/* h3, */
+/* h4, */
+/* h5, */
+/* h6 { */
+/*   font-family: Hack; */
+/*   font-weight: bolder !important; */
+/* } */
+
+/* ul { */
+/*   list-style: none; */
+/*   margin-left: 0; */
+/*   padding-left: 0; */
+/* } */
+
+/* li { */
+/*   padding-left: 1em; */
+/*   text-indent: -1em; */
+/* } */
+
+/* li:before { */
+/*   content: "- "; */
+/*   padding-right: 7px; */
+/* } */
+
+h1 {
+  font-size: x-large;
+  font-weight: 100;
+  padding-top: 5px;
 }
