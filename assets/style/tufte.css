@@ -14,8 +14,8 @@ html {
 
 body {
   counter-reset: sidenote-counter;
-  max-width: 55%;
-  margin-left: 4%;
+  max-width: 65%;
+  margin-left: 1%;
 }
 
 p.subtitle {
@@ -39,7 +39,7 @@ article {
 }
 
 @media screen and (min-width: 1500px) {
-  #content {
+  .header, #content {
     padding-top: 1rem;
     padding-bottom: 1rem;
     width: 70% !important;
@@ -52,7 +52,10 @@ article {
 
 /* Chapter Epigraphs */
 div.epigraph {
-  /* margin: 5em 0; */
+    border-left: 4px solid #888;
+    margin-left: 9px;
+    /* padding-left: 1rem; */
+}
 }
 
 div.epigraph > blockquote {

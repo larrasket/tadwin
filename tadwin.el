@@ -44,8 +44,6 @@
 (setq header (with-temp-buffer
                (insert-file-contents "assets/head.html")
                (buffer-string)))
-
-
 (setq preamble (with-temp-buffer
                  (insert-file-contents "assets/preamble.html")
                  (buffer-string)))
@@ -464,3 +462,4 @@ it."
 (org-publish-all t)
 
 (message "Build Complete!")
+(setq org-html-htmlize-output-type nil) ; Disable syntax highlighting

@@ -5,7 +5,7 @@ h5,
 h6,
 h7,
 h8 {
-  font-weight: normal;
+  font-weight: 500;
 }
 
 a:link,
@@ -450,6 +450,6 @@ li:has(> a:target) {
 
 h1 {
   font-size: x-large;
-  font-weight: 100;
+  /* font-weight: 100; */
   padding-top: 5px;
 }

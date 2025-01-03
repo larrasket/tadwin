@@ -2,9 +2,12 @@
 <head>
 <style>
 
-h1:before {
-    content: '[ ';
-    font-size: 14px;
+h1:not(#preamble h1):before {
+    content: '■';
+    font-size: 0.8em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+    color: #ff0101;
 }
 
 
@@ -16,10 +19,6 @@ h1 b, h2 b, h3 b, h4 b {
     font-size: small;
 }
 
-h1:after {
-    content: ' ] ';
-    font-size: 14px;
-}
 
 h3 {
     margin-block-end: 0;
