@@ -58,7 +58,7 @@ h2,h3,h4,h5,h6,h7,h8 {
         ("homecomments" . "(eval (salih/print-text-nodes t))")
         ("dis" . "(eval (format \"* Comments \n #+begin_export html\n%s\n#+end_export\" isso-comments ))")
         ("b" . "(eval (format \"#+begin_export html\n%s\n#+end_export\" (salih/print-back-links)))")
-        ("t" . "(eval (concat \"This section was labeled under\"))")
+        ("t" . "(eval (concat \"This section was labeled under, or is related to\"))")
         ("indx" . "(eval (concat grid-view))")
         ("ar" . "(eval (concat arabic-view))")
         ("s" . "(eval (concat \"Part of a series on\"))")))
