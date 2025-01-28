@@ -381,7 +381,7 @@ information."
 (defun salih/org-html-publish-to-tufte-html (plist filename pub-dir)
   "Make sure that the file is not already published befeore really publihing
 it."
-  (let* ((rebuild t)
+  (let* ((rebuild nil)
          (html (let* ((org-inhibit-startup t)
                       (visiting (find-buffer-visiting filename))
                       (salih/rebuild nil)
