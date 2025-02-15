@@ -1,4 +1,4 @@
-#!/usr/bin/env /home/l/.emacs.d/bin/doomscript
+#!/usr/bin/env /Users/l/.emacs.d/bin/doomscript
 (provide 'tadwin)
 (require 'doom-start)
 (load "~/blog/id.el")
@@ -78,8 +78,10 @@
 
 
 
-(defun salih/get-date (file)
-  (let ((date (org-publish-find-property file :date nil)))
+(defun salih/get-date (file &optional node)
+  (if node
+      (cdr (org-id-decode node))
+    (let ((date (org-publish-find-property file :date nil)))
     ;; DATE is a secondary string.  If it contains
     ;; a time-stamp, convert it to internal format.
     ;; Otherwise, use FILE modification time.
@@ -89,7 +91,7 @@
                     (and (org-string-nw-p value)
                          (org-time-string-to-time value))))))
           ((file-exists-p file)
-           (file-attribute-modification-time (file-attributes file))))))
+           (file-attribute-modification-time (file-attributes file)))))))
 
 (defun salih/time-less-p (v1 v2 &optional reversed)
   (if reversed
@@ -99,9 +101,22 @@
 
 (defun salih/compare-timestamps (node1 node2)
   "Comparison function to sort structs based on timestamp slot."
-  (let ((timestamp1 (salih/get-date (org-roam-node-file node1)))
-        (timestamp2 (salih/get-date (org-roam-node-file node2))))
-    (time-less-p  timestamp2 timestamp1)))
+  (let* ((node-1-file (org-roam-node-file node1))
+         (node-2-file (org-roam-node-file node2))
+         (use-id-1 (or
+                    (cl-search "/sh/" node-1-file)
+                    (cl-search "stack.org" node-1-file)))
+         (use-id-2 (or
+                    (cl-search "/sh/" node-2-file)
+                    (cl-search "stack.org" node-2-file)))
+         (timestamp1 (salih/get-date node-1-file (when use-id-1 (org-roam-node-id node1))))
+         (timestamp2 (salih/get-date node-2-file (when use-id-2 (org-roam-node-id node2)))))
+    (time-less-p  timestamp2 timestamp1)
+    ;; (cond ((and use-id-1 (not use-id-2)) t)
+    ;;       ((and use-id-2 (not use-id-1)) nil)
+    ;;       ((and (not use-id-1) (not use-id-2)) (time-less-p  timestamp2 timestamp1))
+    ;;       (t (time-less-p  timestamp2 timestamp1)))
+    ))
 
 
 
@@ -110,8 +125,12 @@
   (let ((backlinks (org-roam-backlinks-get (org-roam-node-from-id id) :unique t))
         nodes '())
     (while backlinks
-      (let ((shp (cl-search "/sh/" (org-roam-node-file
-                                    (org-roam-backlink-source-node (car backlinks))))))
+      (let ((shp (or
+                  (cl-search "/sh/" (org-roam-node-file
+                                     (org-roam-backlink-source-node (car
+                                                                     backlinks))))
+                  (cl-search "stack.org" (org-roam-node-file
+                                    (org-roam-backlink-source-node (car backlinks)))))))
         (if (or (and with-sh shp) (and (not with-sh) (not shp)))
             (push (org-roam-backlink-source-node (car backlinks)) nodes)))
       (setq backlinks  (cdr backlinks)))
@@ -127,6 +146,9 @@
          (entry (org-roam-node-file (org-roam-node-from-id id)))
          (lang (if node (salih/get-node-property node "LANG")))
          (subtitle (if lang (salih/get-node-property node "SUBTITLE")))
+         (use-id (or
+                  (cl-search "/sh/" entry)
+                  (cl-search "stack.org" entry)))
          (preview nil))
     (if (and (cl-search "blog" (org-roam-node-file node)) (not (cl-search "/t/" (org-roam-node-file node))))
         (if tag
@@ -139,7 +161,7 @@
                     (if subtitle
                         subtitle
                       (org-roam-node-title node))
-                    (format-time-string "%a %d %b %Y" (salih/get-date entry)))
+                    (format-time-string "%a %d %b %Y" (salih/get-date entry (when use-id id))))
 
           (format "%s %s. %s [[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n"
                   astr
@@ -151,7 +173,7 @@
                   (if subtitle
                         subtitle
                       (org-roam-node-title node))
-                  (format-time-string "%a %d %b %Y" (salih/get-date entry))))
+                  (format-time-string "%a %d %b %Y" (salih/get-date entry (when use-id id)))))
 
       "")))
 
@@ -266,7 +288,7 @@
 (defun salih/print-back-links (&optional tag)
   (concat (salih/get-backlinks-html tag nil) "\n"
           (let ((shorts
-                 (salih/get-backlinks-html tag t "")))
+                 (salih/get-backlinks-html t t "")))
             (unless (equal shorts "")
               (concat (salih/org-string-to-html "** Short Posts") "\n" shorts)))))
 
@@ -459,7 +481,9 @@ it."
 (salih/set-org-publish-project-alist)
 
 
+(add-hook! 'org-mode-hook (projectile-mode -1))
 (org-publish-all t)
+(remove-hook! 'org-mode-hook (projectile-mode -1))
 
 (message "Build Complete!")
 (setq org-html-htmlize-output-type nil) ; Disable syntax highlighting
