@@ -68,12 +68,18 @@
                                  (tagside "right")))
 
 (defun salih/org-string-to-html (org-string)
-  "Export an Org-mode string to HTML."
-  (let ((org-export-with-toc nil)
-        (org-export-with-section-numbers nil))
-    (with-temp-buffer
-      (insert org-string)
-      (org-export-string-as (buffer-string) 'html t))))
+  "Export an Org-mode string to HTML with proper heading levels."
+  (let* ((org-export-with-toc nil)
+         (org-export-with-section-numbers nil)
+         (top-level
+          (if (string-match "^\\(\\*+\\)\\s-+" org-string)
+              (length (match-string 1 org-string))
+            1)))
+    (let ((org-html-toplevel-hlevel top-level))
+      (with-temp-buffer
+        (insert org-string)
+        (org-export-string-as (buffer-string) 'html t)))))
+
 
 
 
@@ -285,12 +291,13 @@
 
     (mapconcat 'identity strings "")))
 
-(defun salih/print-back-links (&optional tag)
+(defun salih/print-back-links (&optional tag treat-shorts-as-long)
   (concat (salih/get-backlinks-html tag nil) "\n"
           (let ((shorts
-                 (salih/get-backlinks-html t t "")))
-            (unless (equal shorts "")
-              (concat (salih/org-string-to-html "** Short Posts") "\n" shorts)))))
+                 (salih/get-backlinks-html t t (if treat-shorts-as-long nil "***"))))
+            (unless (and (equal shorts ""))
+              (concat (unless treat-shorts-as-long
+                        (salih/org-string-to-html "** Short Posts")) "\n" shorts)))))
 
 
 

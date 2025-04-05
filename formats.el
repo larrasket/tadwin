@@ -34,9 +34,22 @@ h2,h3,h4,h5,h6,h7,h8 {
     align-items: baseline;
 }
 
+
+.outline-3  {
+    display: flex;
+    align-items: baseline;
+}
+
 @media screen and (max-width: 1089px) {
 
 .outline-2 {
+    display: grid;
+    grid-template-columns: minmax(0, 3.6fr) minmax(0, 1fr);
+    align-items: baseline;
+}
+
+
+.outline-3 {
     display: grid;
     grid-template-columns: minmax(0, 3.6fr) minmax(0, 1fr);
     align-items: baseline;
