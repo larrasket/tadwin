@@ -5,7 +5,7 @@ h5,
 h6,
 h7,
 h8 {
-  font-weight: 500;
+  font-weight: 100;
 }
 
 a:link,
@@ -49,7 +49,7 @@ body {
 
 p {
   unicode-bidi: plaintext;
-  line-height: 1.2;
+  /* line-height: 1.2; */
 }
 
 .footpara {
@@ -450,6 +450,10 @@ li:has(> a:target) {
 
 h1 {
   font-size: x-large;
-  /* font-weight: 100; */
+  font-weight: 100 !important;
   padding-top: 5px;
+}
+
+a {
+  word-break: break-all;
 }
