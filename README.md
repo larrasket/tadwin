@@ -1,3 +1,7 @@
+-   <span class="timestamp-wrapper"><span class="timestamp">[2025-04-19 Sat 14:12] </span></span> The code here is **EXTREME MESS**. It is not a software
+    that&rsquo;s supposed to be used by others (yet). Feel free to ask me about
+    anything, email address can be found on my profile or web page.
+
 > Please **do note** that this software is not even a pre-alpha, it&rsquo;s just my
 > personal script. It might not work for you but it will surely help inspiring you
 > to build something similar, or it will work for you after some modifications.

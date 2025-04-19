@@ -1,6 +1,10 @@
 #+DATE: July 6, 2017
 #+OPTIONS: toc:nil
 
+- [2025-04-19 Sat 14:12] The code here is *EXTREME MESS*. It is not a software
+  that's supposed to be used by others (yet). Feel free to ask me about
+  anything, email address can be found on my profile or web page.
+
 #+begin_quote
 Please *do note* that this software is not even a pre-alpha, it's just my
 personal script. It might not work for you but it will surely help inspiring you
