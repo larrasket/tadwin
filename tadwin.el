@@ -430,6 +430,39 @@ it."
 
 
 
+(setq my/org-referenced-filenames
+      (let* ((org-dir (expand-file-name "content/" "~/blog"))
+             (all-org (directory-files-recursively org-dir "\\.org\\'"))
+             (filenames '()))
+        (dolist (f all-org)
+          (with-temp-buffer
+            ;; locally pretend tabs are 8 columns
+            (setq-local tab-width 8)
+            (insert-file-contents f)
+            (org-element-map (org-element-parse-buffer) 'link
+              (lambda (lnk)
+                (when (string= (org-element-property :type lnk) "file")
+                  (push (file-name-nondirectory
+                         (org-element-property :path lnk))
+                        filenames))))))
+        (delete-dups filenames)))
+
+
+(defun salih/org-publish-attachment-if-referenced (plist filename pub-dir)
+  "Publish the file at FILENAME into PUB-DIR only if its basename is in `my/org-referenced-filenames`."
+  (let* ((basename (file-name-nondirectory filename)))
+    (if (member basename my/org-referenced-filenames)
+        (progn
+          (unless (file-directory-p pub-dir)
+            (make-directory pub-dir t))
+          (let ((dest (expand-file-name basename pub-dir)))
+            (unless (file-equal-p (file-truename filename)
+                                  (file-truename dest))
+              (copy-file filename dest t)) dest))
+      (message basename "is not in my list"))))
+
+
+
 
 
 (defun salih/set-org-publish-project-alist ()
@@ -476,6 +509,13 @@ it."
            :recursive t
            :publishing-function org-publish-attachment)
 
+          ("media"
+           :base-directory "../media"
+           :base-extension   "mp4\\|png\\|jpe?g\\|gif\\|svg"
+           :publishing-directory "public/media"
+           :recursive t
+           :publishing-function salih/org-publish-attachment-if-referenced)
+
           ("assets"
            :base-directory "./assets"
            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|svg\\|pdf\\|mp3\\|woff2\\|woff\\|html\\|md\\|ico"
@@ -483,7 +523,10 @@ it."
            :recursive t
            :publishing-function org-publish-attachment)
 
-          ("blog" :components ("blog-notes" "assets" "blog-static")))))
+          ("blog" :components ("blog-notes" "media" "assets" "blog-static")))))
+
+
+
 
 (salih/set-org-publish-project-alist)
 
