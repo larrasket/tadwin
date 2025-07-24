@@ -86,13 +86,13 @@ ul {
   text-align: left;
 }
 
-@media screen and (max-width: 1089px) {
-  .smth {
-  }
-  html {
-    font-size: 14px !important;
-  }
-}
+/* @media screen and (max-width: 1089px) { */
+/*   .smth { */
+/*   } */
+/*   html { */
+/*     font-size: 14px !important; */
+/*   } */
+/* } */
 
 pre.src {
   position: relative;
