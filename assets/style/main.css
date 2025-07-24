@@ -86,13 +86,19 @@ ul {
   text-align: left;
 }
 
-/* @media screen and (max-width: 1089px) { */
-/*   .smth { */
-/*   } */
-/*   html { */
-/*     font-size: 14px !important; */
-/*   } */
-/* } */
+@media screen and (max-width: 1089px) {
+  .smth {
+  }
+  html {
+    font-size: 14px !important;
+  }
+}
+
+@media screen and (min-width: 1090px) {
+  html {
+    font-size: 14px !important;
+  }
+}
 
 pre.src {
   position: relative;
@@ -103,7 +109,6 @@ pre.src {
 
 @media screen and (min-width: 760px) {
   p {
-    text-align: justify;
     unicode-bidi: plaintext;
   }
   figcaption {
