@@ -18,7 +18,233 @@
   <script async data-id="101390423" src= "//static.getclicky.com/js"></script> <noscript>
   <p><img alt="Clicky" width="1" height="1" src= "//in.getclicky.com/101390423ns.gif"></p></noscript>
 
+<!-- Import LazySizes - State-of-the-art lazy loading library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+
+<!-- Optional: Import plugins for better performance -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/plugins/unveilhooks/ls.unveilhooks.min.js" async></script>
+
 <script>
+// Only run on pages with 'art_paintings_media' in the path
+if (window.location.pathname.includes('art_paintings_media')) {
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Configure LazySizes for optimal performance
+    window.lazySizesConfig = window.lazySizesConfig || {};
+    window.lazySizesConfig.loadMode = 1; // Load images one at a time for better performance
+    window.lazySizesConfig.expand = 50; // Load images 50px before they enter viewport
+    window.lazySizesConfig.expFactor = 1.5; // Expand loading area
+    window.lazySizesConfig.hFac = 0.4; // Height factor for loading trigger
+    
+    // Add CSS for smooth transitions and collapsible content
+    const style = document.createElement('style');
+    style.textContent = `
+      .lazyload,
+      .lazyloading {
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
+      }
+      .lazyloaded {
+        opacity: 1;
+      }
+      .collapsible-content {
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+      .collapsible-content.collapsed {
+        max-height: 0 !important;
+      }
+      .collapsible-content.expanded {
+        max-height: none;
+      }
+      /* Blur effect while loading (optional) */
+      .lazyloading {
+        filter: blur(5px);
+        opacity: 0.7;
+      }
+      .lazyloaded {
+        filter: none;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Find all h3 elements
+    const h3Elements = document.querySelectorAll('h3');
+    
+    h3Elements.forEach(function(h3) {
+      // Make h3 clickable and add icon
+      h3.style.position = 'relative';
+      h3.style.cursor = 'pointer';
+      h3.style.paddingLeft = '20px';
+      h3.style.userSelect = 'none';
+      
+      // Add the arrow icon
+      const icon = document.createElement('span');
+      icon.innerHTML = '▶';
+      icon.style.position = 'absolute';
+      icon.style.left = '0px';
+      icon.style.top = '50%';
+      icon.style.transform = 'translateY(-50%)';
+      icon.style.transition = 'transform 0.2s';
+      icon.style.fontSize = '0.8em';
+      icon.style.color = 'rgb(102, 102, 102)';
+      icon.style.fontFamily = 'monospace';
+      
+      h3.insertBefore(icon, h3.firstChild);
+      
+      // Find all content after this h3 until the next h3 or end of parent
+      const contentElements = [];
+      let nextElement = h3.nextElementSibling;
+      
+      while (nextElement && nextElement.tagName !== 'H3') {
+        contentElements.push(nextElement);
+        nextElement = nextElement.nextElementSibling;
+      }
+      
+      // Create a wrapper for smooth collapsing
+      const wrapper = document.createElement('div');
+      wrapper.className = 'collapsible-content collapsed';
+      wrapper.style.maxHeight = '0';
+      
+      // Move content elements into wrapper
+      contentElements.forEach(function(element) {
+        wrapper.appendChild(element);
+      });
+      
+      // Insert wrapper after h3
+      h3.parentNode.insertBefore(wrapper, h3.nextSibling);
+      
+      // Prepare images for LazySizes lazy loading and make them clickable
+      const prepareImagesForLazyLoading = (container) => {
+        const images = container.querySelectorAll('img');
+        images.forEach(function(img) {
+          // Only process if not already processed
+          if (!img.classList.contains('lazyload') && !img.dataset.processed) {
+            // Store original src in data-src for LazySizes
+            if (img.src && img.src !== '' && !img.src.startsWith('data:')) {
+              img.dataset.src = img.src;
+              // Use a tiny placeholder or low-quality placeholder
+              img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1"%3E%3Crect width="1" height="1" fill="%23f0f0f0"/%3E%3C/svg%3E';
+            }
+
+            // Handle srcset for responsive images
+            if (img.srcset && img.srcset !== '') {
+              img.dataset.srcset = img.srcset;
+              img.srcset = '';
+            }
+
+            // Handle sizes attribute
+            if (img.sizes) {
+              img.dataset.sizes = img.sizes;
+            }
+
+            // Add LazySizes classes
+            img.classList.add('lazyload');
+
+            // Make image clickable - add cursor pointer
+            img.style.cursor = 'pointer';
+
+            // Add click handler to open image in new tab
+            img.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation(); // Prevent triggering h3 collapse
+
+              // Get the actual image URL (either from src or data-src)
+              let imageUrl = this.src;
+              if (this.dataset.src && !this.src.startsWith('data:')) {
+                imageUrl = this.dataset.src;
+              } else if (this.src.startsWith('data:') && this.dataset.src) {
+                imageUrl = this.dataset.src;
+              }
+
+              // Open image in new tab
+              if (imageUrl && !imageUrl.startsWith('data:')) {
+                window.open(imageUrl, '_blank');
+              }
+            });
+
+            // Mark as processed
+            img.dataset.processed = 'true';
+
+            // Maintain aspect ratio to prevent layout shift
+            if (!img.style.aspectRatio && img.width && img.height) {
+              img.style.aspectRatio = img.width + '/' + img.height;
+            }
+          }
+        });
+      };
+
+      // Prepare all images in this section for lazy loading
+      prepareImagesForLazyLoading(wrapper);
+
+      // Track collapsed state
+      let isCollapsed = true;
+      let hasBeenExpanded = false;
+
+      // Add click handler
+      h3.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        if (isCollapsed) {
+          // Expand: show content and activate lazy loading
+          icon.style.transform = 'translateY(-50%) rotate(90deg)';
+          wrapper.classList.remove('collapsed');
+          wrapper.classList.add('expanded');
+          wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+
+          // Only activate LazySizes for this section when first expanded
+          if (!hasBeenExpanded) {
+            // Trigger LazySizes to check for images in this newly visible section
+            if (window.lazySizes) {
+              // Force LazySizes to check all images in this wrapper
+              const lazyImages = wrapper.querySelectorAll('.lazyload');
+              lazyImages.forEach(img => {
+                // Add to LazySizes queue
+                window.lazySizes.loader.unveil(img);
+              });
+            }
+            hasBeenExpanded = true;
+          }
+
+          isCollapsed = false;
+
+          // Recalculate height after images potentially load
+          setTimeout(() => {
+            if (!isCollapsed) {
+              wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+            }
+          }, 100);
+
+        } else {
+          // Collapse: hide content
+          icon.style.transform = 'translateY(-50%) rotate(0deg)';
+          wrapper.classList.remove('expanded');
+          wrapper.classList.add('collapsed');
+          wrapper.style.maxHeight = '0';
+
+          isCollapsed = true;
+        }
+      });
+
+      // Listen for LazySizes events to adjust height dynamically
+      wrapper.addEventListener('lazyloaded', function(e) {
+        if (!isCollapsed) {
+          // Adjust wrapper height when images load
+          setTimeout(() => {
+            wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+          }, 50);
+        }
+      });
+    });
+  });
+}
+</script>
+
+<script>
+
+
+
+  
 // Stack Page Formatter - Apply inline layout to specific pages
 (function() {
   'use strict';
