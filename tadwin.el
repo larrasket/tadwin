@@ -509,12 +509,12 @@ it."
            :recursive t
            :publishing-function org-publish-attachment)
 
-          ("media"
-           :base-directory "../media"
-           :base-extension   "mp4\\|png\\|jpe?g\\|gif\\|svg"
-           :publishing-directory "public/media"
-           :recursive t
-           :publishing-function salih/org-publish-attachment-if-referenced)
+          ;; ("media"
+          ;;  :base-directory "../media"
+          ;;  :base-extension   "mp4\\|png\\|jpe?g\\|gif\\|svg"
+          ;;  :publishing-directory "public/media"
+          ;;  :recursive t
+          ;;  :publishing-function salih/org-publish-attachment-if-referenced)
 
           ("assets"
            :base-directory "./assets"
@@ -523,7 +523,9 @@ it."
            :recursive t
            :publishing-function org-publish-attachment)
 
-          ("blog" :components ("blog-notes" "media" "assets" "blog-static")))))
+          ("blog" :components ("blog-notes"
+                               ;; "media"
+                               "assets" "blog-static")))))
 
 
 
