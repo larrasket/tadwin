@@ -35,7 +35,7 @@ if (window.location.pathname.includes('art_paintings_media')) {
     window.lazySizesConfig.expand = 50; // Load images 50px before they enter viewport
     window.lazySizesConfig.expFactor = 1.5; // Expand loading area
     window.lazySizesConfig.hFac = 0.4; // Height factor for loading trigger
-    
+
     // Add CSS for smooth transitions and collapsible content
     const style = document.createElement('style');
     style.textContent = `
@@ -67,17 +67,17 @@ if (window.location.pathname.includes('art_paintings_media')) {
       }
     `;
     document.head.appendChild(style);
-    
+
     // Find all h3 elements
     const h3Elements = document.querySelectorAll('h3');
-    
+
     h3Elements.forEach(function(h3) {
       // Make h3 clickable and add icon
       h3.style.position = 'relative';
       h3.style.cursor = 'pointer';
       h3.style.paddingLeft = '20px';
       h3.style.userSelect = 'none';
-      
+
       // Add the arrow icon
       const icon = document.createElement('span');
       icon.innerHTML = '▶';
@@ -89,31 +89,31 @@ if (window.location.pathname.includes('art_paintings_media')) {
       icon.style.fontSize = '0.8em';
       icon.style.color = 'rgb(102, 102, 102)';
       icon.style.fontFamily = 'monospace';
-      
+
       h3.insertBefore(icon, h3.firstChild);
-      
+
       // Find all content after this h3 until the next h3 or end of parent
       const contentElements = [];
       let nextElement = h3.nextElementSibling;
-      
+
       while (nextElement && nextElement.tagName !== 'H3') {
         contentElements.push(nextElement);
         nextElement = nextElement.nextElementSibling;
       }
-      
+
       // Create a wrapper for smooth collapsing
       const wrapper = document.createElement('div');
       wrapper.className = 'collapsible-content collapsed';
       wrapper.style.maxHeight = '0';
-      
+
       // Move content elements into wrapper
       contentElements.forEach(function(element) {
         wrapper.appendChild(element);
       });
-      
+
       // Insert wrapper after h3
       h3.parentNode.insertBefore(wrapper, h3.nextSibling);
-      
+
       // Prepare images for LazySizes lazy loading and make them clickable
       const prepareImagesForLazyLoading = (container) => {
         const images = container.querySelectorAll('img');
@@ -314,8 +314,22 @@ if (window.location.pathname.includes('art_paintings_media')) {
         display: block;
         margin: 0.5em 0;
       }
+
+      /* Ensure proper anchor target visibility */
+      .outline-3[id] {
+        scroll-margin-top: 20px;
+      }
     `;
     document.head.appendChild(style);
+  }
+  
+  // Extract ID from container div
+  function extractIdFromContainer(entry) {
+    const containerId = entry.id;
+    if (containerId && containerId.startsWith('outline-container-')) {
+      return containerId.replace('outline-container-', '');
+    }
+    return null;
   }
   
   // Apply the formatting transformation
@@ -324,6 +338,9 @@ if (window.location.pathname.includes('art_paintings_media')) {
     const entries = document.querySelectorAll('.outline-3');
     
     entries.forEach((entry, index) => {
+      // Extract the anchor ID from the container before transformation
+      const anchorId = extractIdFromContainer(entry);
+      
       // Extract components
       const h3 = entry.querySelector('h3');
       const notes = entry.querySelector('.notes');
@@ -399,6 +416,11 @@ if (window.location.pathname.includes('art_paintings_media')) {
       // Clear the entry and add the new paragraph
       entry.innerHTML = '';
       entry.appendChild(newParagraph);
+      
+      // Preserve the anchor ID by setting it on the transformed entry
+      if (anchorId) {
+        entry.id = anchorId;
+      }
       
       // Add any block elements after the paragraph
       blockElements.forEach(blockHtml => {
