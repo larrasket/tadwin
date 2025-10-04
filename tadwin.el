@@ -91,13 +91,13 @@
     ;; DATE is a secondary string.  If it contains
     ;; a time-stamp, convert it to internal format.
     ;; Otherwise, use FILE modification time.
-    (cond ((let ((ts (and (consp date) (assq 'timestamp date))))
-             (and ts
-                  (let ((value (org-element-interpret-data ts)))
-                    (and (org-string-nw-p value)
-                         (org-time-string-to-time value))))))
-          ((file-exists-p file)
-           (file-attribute-modification-time (file-attributes file)))))))
+     (cond ((let ((ts (and (consp date) (assq 'timestamp date))))
+              (and ts
+                   (let ((value (org-element-interpret-data ts)))
+                     (and (org-string-nw-p value)
+                          (org-time-string-to-time value))))))
+           ((file-exists-p file)
+            (file-attribute-modification-time (file-attributes file)))))))
 
 (defun salih/time-less-p (v1 v2 &optional reversed)
   (if reversed
@@ -117,12 +117,12 @@
                     (cl-search "stack.org" node-2-file)))
          (timestamp1 (salih/get-date node-1-file (when use-id-1 (org-roam-node-id node1))))
          (timestamp2 (salih/get-date node-2-file (when use-id-2 (org-roam-node-id node2)))))
-    (time-less-p  timestamp2 timestamp1)
+    (time-less-p  timestamp2 timestamp1)))
     ;; (cond ((and use-id-1 (not use-id-2)) t)
     ;;       ((and use-id-2 (not use-id-1)) nil)
     ;;       ((and (not use-id-1) (not use-id-2)) (time-less-p  timestamp2 timestamp1))
     ;;       (t (time-less-p  timestamp2 timestamp1)))
-    ))
+
 
 
 
@@ -136,7 +136,7 @@
                                      (org-roam-backlink-source-node (car
                                                                      backlinks))))
                   (cl-search "stack.org" (org-roam-node-file
-                                    (org-roam-backlink-source-node (car backlinks)))))))
+                                          (org-roam-backlink-source-node (car backlinks)))))))
         (if (or (and with-sh shp) (and (not with-sh) (not shp)))
             (push (org-roam-backlink-source-node (car backlinks)) nodes)))
       (setq backlinks  (cdr backlinks)))
