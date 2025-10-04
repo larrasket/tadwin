@@ -5,12 +5,30 @@ h5,
 h6,
 h7,
 h8 {
-  font-weight: 100;
+  font-weight: 300;
+  font-style: italic;
+  color: #5d4037;
+  margin-top: 2em;
 }
 
 a:link,
 a:visited {
-  color: blue;
+  color: #795548;
+  text-decoration: none;
+  border-bottom: 1px dotted #795548;
+  transition: all 0.1s ease;
+  position: relative;
+}
+
+a:hover {
+  color: #5d4037;
+  border-bottom: 2px solid #5d4037;
+  text-shadow: 0 0 0.5px #5d4037;
+}
+
+a:active {
+  color: #4a3329;
+  border-bottom: 2px solid #4a3329;
 }
 
 .smth p::before {
@@ -22,20 +40,20 @@ a:visited {
 }
 
 .tag a {
-  color: blue;
+  color: #8d6e63;
   text-transform: lowercase;
-
-  /* font-style: ital; */
+  font-style: italic;
+  text-decoration: none;
 }
 
 .tag a:after {
-  color: #ff0101;
-  content: " ]";
+  color: #a1887f;
+  content: " •";
 }
 
 .tag a:before {
-  color: #ff0101;
-  content: "[ ";
+  color: #a1887f;
+  content: "• ";
 }
 
 a {
@@ -44,12 +62,52 @@ a {
 }
 
 body {
-  font-family: "Arimo", "Amiri", Sans;
+  font-family: "Georgia", "Amiri", serif;
+  background: #fcfaf6;
+  color: #2c1810;
+  line-height: 1.7;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 10%;
+  right: 5%;
+  width: 150px;
+  height: 150px;
+  background-image: url('/style/svg/Skeleton Hand Flower 01.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: grayscale(60%) opacity(0.12);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@media screen and (max-width: 768px) {
+  body::before {
+    display: none;
+  }
 }
 
 p {
   unicode-bidi: plaintext;
-  /* line-height: 1.2; */
+  line-height: 1.6;
+}
+
+/* Arabic text support */
+[lang="ar"], .arabic {
+  font-family: "Amiri", "Georgia", serif;
+  direction: rtl;
+  text-align: right;
+  line-height: 1.8;
+}
+
+[lang="ar"] h1, [lang="ar"] h2, [lang="ar"] h3,
+[lang="ar"] h4, [lang="ar"] h5, [lang="ar"] h6 {
+  font-style: normal;
+  text-align: right;
 }
 
 .footpara {
@@ -105,6 +163,26 @@ pre.src {
   word-wrap: normal;
   overflow-x: auto;
   white-space: pre;
+  background: #f5f0e8;
+  border-left: 3px solid #8d6e63;
+  padding: 15px;
+  font-family: "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+pre.src::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 50px;
+  height: 50px;
+  background-image: url('/style/svg/-222.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: grayscale(100%) opacity(0.04);
+  pointer-events: none;
 }
 
 @media screen and (min-width: 760px) {
@@ -146,12 +224,110 @@ div.hanging-indent {
   text-indent: -1.5rem;
 }
 
+blockquote {
+  border: none !important;
+  padding: 3em 0;
+  margin: 3em 0;
+  font-style: italic;
+  color: #5d4037;
+  text-align: center;
+  font-size: 1.1em;
+  line-height: 1.6;
+  position: relative;
+  background: none;
+}
+
+blockquote::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  background-image: url('/style/svg/-236.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: grayscale(80%) brightness(0.5) opacity(0.08);
+  z-index: -1;
+}
+
+blockquote::after {
+  content: none;
+}
+
+blockquote p {
+  unicode-bidi: plaintext;
+  margin: 0;
+  padding: 0 2em;
+}
+
+div.epigraph {
+  font-style: italic;
+  color: #6d4c41;
+  margin: 2em 0;
+  text-align: center;
+  font-size: 1.1em;
+  line-height: 1.6;
+  border: none !important;
+  background: none;
+  position: relative;
+  padding: 2em 0;
+}
+
+div.epigraph::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  background-image: url('/style/svg/-1-watw8z.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: grayscale(70%) contrast(1.2) opacity(0.08);
+  z-index: -1;
+}
+
+div.epigraph > blockquote {
+  border: none;
+  padding: 1em 0 0 0;
+  margin: 0;
+  font-style: italic;
+  background: none;
+}
+
+div.epigraph > blockquote::before {
+  content: "";
+  display: block;
+  font-size: 1.8em;
+  color: #8d6e63;
+  opacity: 0.7;
+  margin-bottom: 0.5em;
+}
+
+div.epigraph > blockquote::after {
+  display: none;
+}
+
 div.epigraph > blockquote > footer {
   font-style: normal;
+  text-align: right;
+  color: #8d6e63;
+  font-size: 0.9em;
+  margin-top: 1em;
+  font-style: italic;
 }
 
 div.epigraph > blockquote > footer > cite {
   font-style: italic;
+}
+
+blockquote p {
+  unicode-bidi: plaintext;
 }
 .header img {
   /* max-width: 100px; */
@@ -216,14 +392,34 @@ table tr th:last-child {
 
 /* Style for the timestamp container */
 .timestamp-wrapper {
-  color: #004aa2;
+  color: #8d6e63;
+  font-style: italic;
+  font-size: 0.9em;
+  position: relative;
+  display: inline-block;
+}
+
+.timestamp-wrapper::before,
+.entry-date::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url('/style/svg/Skeleton Hand Flower 02.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: grayscale(60%) opacity(0.35);
+  margin-right: 6px;
+  vertical-align: middle;
 }
 
 .timestamp {
 }
 
 h2 .timestamp-wrapper {
-  font-size: 17px;
+  font-size: 0.8em;
+  color: #a1887f;
 }
 
 .timestamp-kwd {
@@ -277,41 +473,37 @@ span.TODO {
 }
 
 .tag {
-  border-bottom: 1px dashed #0074ff;
-  background: rgb(190 215 255 / 10%);
-  padding-top: 0.2px;
-  padding-left: 9px;
+  font-style: italic;
+  color: #8d6e63;
   font-size: 0.9em;
-  color: #333;
+  padding: 2px 0;
+  margin: 4px 0;
 }
 
 span.tag {
   background-color: inherit !important;
   font-size: small;
-  color: darkgray;
-  font-style: normal !important;
-  font-weight: bold;
+  color: #8d6e63;
+  font-style: italic !important;
+  font-weight: normal;
 }
 
 span.tag::after {
-  content: " ]";
-  font-size: smaller;
-  color: black;
+  content: "";
 }
 
 span.tag::before {
-  content: "[ ";
-  color: black;
-  font-size: smaller;
+  content: "";
 }
 
 .propert {
-  background-color: rgba(255, 228, 196, 0.12);
-  border-bottom: 1px dashed #ff7a00;
-  padding-top: 0.2px;
-  padding-left: 9px;
+  font-style: italic;
+  color: #795548;
   font-size: 0.9em;
-  color: #333;
+  padding: 2px 0;
+  margin: 4px 0;
+  border-left: 2px solid #bcaaa4;
+  padding-left: 10px;
 }
 
 .propert a {
@@ -320,12 +512,13 @@ span.tag::before {
 }
 
 .postscript {
-  background-color: rgba(255, 240, 245, 0.13);
-  border-bottom: 1px dashed #d4006e;
-  padding-top: 0.2px;
-  padding-left: 9px;
+  font-style: italic;
+  color: #8d6e63;
   font-size: 0.9em;
-  color: #333;
+  padding: 2px 0;
+  margin: 4px 0;
+  border-left: 2px solid #c8b9b3;
+  padding-left: 10px;
 }
 
 .postscript a {
@@ -350,13 +543,13 @@ span.tag::before {
 /* } */
 
 :target {
-  background-color: #ffa;
+  background: linear-gradient(90deg, transparent, rgba(141, 110, 99, 0.2), transparent);
 }
 a:target + .target-text {
-  background-color: #ffa;
+  background: linear-gradient(90deg, transparent, rgba(141, 110, 99, 0.2), transparent);
 }
 li:has(> a:target) {
-  background-color: #ffa;
+  background: linear-gradient(90deg, transparent, rgba(141, 110, 99, 0.2), transparent);
 }
 
 .notes {
@@ -455,8 +648,12 @@ li:has(> a:target) {
 
 h1 {
   font-size: x-large;
-  font-weight: 100 !important;
+  font-weight: 300 !important;
   padding-top: 5px;
+  color: #3e2723;
+  text-align: center;
+  font-style: italic;
+  margin: 1.5em;
 }
 
 a {
