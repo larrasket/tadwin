@@ -8,7 +8,8 @@ h8 {
   font-weight: 300;
   font-style: italic;
   color: #5d4037;
-  margin-top: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.3em;
 }
 
 a:link,
@@ -63,9 +64,8 @@ a {
 
 body {
   font-family: "Georgia", "Amiri", serif;
-  background: #fcfaf6;
+  background: #faf8f4;
   color: #2c1810;
-  line-height: 1.7;
   position: relative;
 }
 
@@ -76,7 +76,7 @@ body::before {
   right: 5%;
   width: 150px;
   height: 150px;
-  background-image: url('/style/svg/Skeleton Hand Flower 01.svg');
+  background-image: url('/style/svg/-236.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -140,7 +140,6 @@ ul {
   margin-left: 3px;
 }
 .smth p {
-  font-size: 13px;
   text-align: left;
 }
 
@@ -154,7 +153,6 @@ ul {
 
 @media screen and (min-width: 1090px) {
   html {
-    font-size: 14px !important;
   }
 }
 
@@ -163,7 +161,7 @@ pre.src {
   word-wrap: normal;
   overflow-x: auto;
   white-space: pre;
-  background: #f5f0e8;
+  background: #f8f4ed;
   border-left: 3px solid #8d6e63;
   padding: 15px;
   font-family: "Courier New", monospace;
@@ -353,6 +351,58 @@ blockquote p {
   text-decoration: none !important;
 }
 
+.site-nav {
+  text-align: center;
+  margin: 1em 0 1.5em;
+  font-size: 0.9em;
+  font-style: italic;
+  color: #8d6e63;
+}
+
+.site-nav a {
+  margin: 0 0.5em;
+  color: #795548;
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover {
+  color: #5d4037;
+}
+
+.site-nav span {
+  color: #a1887f;
+  user-select: none;
+}
+
+@media screen and (max-width: 768px) {
+  .site-nav {
+    font-size: 0.85em;
+    line-height: 1.8;
+  }
+
+  .site-nav a {
+    margin: 0 0.3em;
+  }
+}
+
+.header-divider {
+display: none;
+}
+
+.header-divider span {
+  display: inline-block;
+  animation: subtle-float 3s ease-in-out infinite;
+}
+
+@keyframes subtle-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 20px;
@@ -498,17 +548,17 @@ span.tag::before {
 
 .propert {
   font-style: italic;
-  color: #795548;
+  color: #8d6e63;
   font-size: 0.9em;
   padding: 2px 0;
   margin: 4px 0;
-  border-left: 2px solid #bcaaa4;
-  padding-left: 10px;
 }
 
 .propert a {
-  color: blue;
-  /* font-weight: bold; */
+  color: #8d6e63;
+  text-transform: lowercase;
+  font-style: italic;
+  text-decoration: none;
 }
 
 .postscript {
@@ -522,7 +572,7 @@ span.tag::before {
 }
 
 .postscript a {
-  color: blue;
+  color: #795548;
   /* text-transform: lowercase; */
   /* font-weight: bold; */
 }
@@ -653,7 +703,12 @@ h1 {
   color: #3e2723;
   text-align: center;
   font-style: italic;
-  margin: 1.5em;
+  margin: 0.5em 1.5em 0.8em;
+}
+
+#content > h1:first-of-type,
+#content h1:first-child {
+  font-style: normal;
 }
 
 a {
