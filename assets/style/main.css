@@ -141,6 +141,10 @@ ul {
 }
 .smth p {
   text-align: left;
+  font-size: smaller;
+  padding: 0px;
+  margin: 0.6em;
+  font-family: math;
 }
 
 @media screen and (max-width: 1089px) {
@@ -600,10 +604,6 @@ a:target + .target-text {
 }
 li:has(> a:target) {
   background: linear-gradient(90deg, transparent, rgba(141, 110, 99, 0.2), transparent);
-}
-
-.notes {
-  margin-top: -15px;
 }
 
 .recents-2 {

@@ -18,9 +18,9 @@
     (s-replace-all '(("class=\"outline" . "class=\"footrecents")
                      ("<h2 id=\"posts\">Posts</h2>" .
                       "<h2> <a href=\"stack.html\">Top of My Stack</a> </h2>"))
-                 (salih/org-string-to-html
-                  (salih/org-get-subtree-as-org-string
-                   "~/blog/content/stack.org" "Posts")))))
+                   (salih/org-string-to-html)
+                   (salih/org-get-subtree-as-org-string
+                    "~/blog/content/stack.org" "Posts"))))
 
 
 (advice-add 'org-html-stable-ids--get-reference :override
@@ -88,16 +88,16 @@
   (if node
       (cdr (org-id-decode node))
     (let ((date (org-publish-find-property file :date nil)))
-    ;; DATE is a secondary string.  If it contains
-    ;; a time-stamp, convert it to internal format.
-    ;; Otherwise, use FILE modification time.
-     (cond ((let ((ts (and (consp date) (assq 'timestamp date))))
-              (and ts
-                   (let ((value (org-element-interpret-data ts)))
-                     (and (org-string-nw-p value)
-                          (org-time-string-to-time value))))))
-           ((file-exists-p file)
-            (file-attribute-modification-time (file-attributes file)))))))
+      ;; DATE is a secondary string.  If it contains
+      ;; a time-stamp, convert it to internal format.
+      ;; Otherwise, use FILE modification time.
+      (cond ((let ((ts (and (consp date) (assq 'timestamp date))))
+               (and ts
+                    (let ((value (org-element-interpret-data ts)))
+                      (and (org-string-nw-p value)
+                           (org-time-string-to-time value))))))
+            ((file-exists-p file)
+             (file-attribute-modification-time (file-attributes file)))))))
 
 (defun salih/time-less-p (v1 v2 &optional reversed)
   (if reversed
@@ -118,10 +118,10 @@
          (timestamp1 (salih/get-date node-1-file (when use-id-1 (org-roam-node-id node1))))
          (timestamp2 (salih/get-date node-2-file (when use-id-2 (org-roam-node-id node2)))))
     (time-less-p  timestamp2 timestamp1)))
-    ;; (cond ((and use-id-1 (not use-id-2)) t)
-    ;;       ((and use-id-2 (not use-id-1)) nil)
-    ;;       ((and (not use-id-1) (not use-id-2)) (time-less-p  timestamp2 timestamp1))
-    ;;       (t (time-less-p  timestamp2 timestamp1)))
+;; (cond ((and use-id-1 (not use-id-2)) t)
+;;       ((and use-id-2 (not use-id-1)) nil)
+;;       ((and (not use-id-1) (not use-id-2)) (time-less-p  timestamp2 timestamp1))
+;;       (t (time-less-p  timestamp2 timestamp1)))
 
 
 
@@ -161,8 +161,8 @@
             (format "%s %s[[id:%s][%s]]\n#+BEGIN_smth\n%s\n#+END_smth\n"
                     astr
                     (if lang
-                       "*Arabic* "
-                     "")
+                        "*Arabic* "
+                      "")
                     id
                     (if subtitle
                         subtitle
@@ -173,12 +173,12 @@
                   astr
                   counter
                   (if lang
-                       "*Arabic* "
-                     "")
+                      "*Arabic* "
+                    "")
                   id
                   (if subtitle
-                        subtitle
-                      (org-roam-node-title node))
+                      subtitle
+                    (org-roam-node-title node))
                   (format-time-string "%a %d %b %Y" (salih/get-date entry (when use-id id)))))
 
       "")))
@@ -230,9 +230,9 @@
                 (substring (cl-first (s-split " " (salih/get-node-property node "NOTER_PAGE"))) 1)
                 (format-time-string "%Y-%m-%d (%H:%M)" (cdr (org-id-decode  (org-roam-node-id node)))))
 
-        (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
-            entry
-            id))))
+      (format "#+INCLUDE: \"%s::#%s\" :only-contents nil\n"
+              entry
+              id))))
 
 
 (defun salih/get-node-property (node property)
@@ -305,17 +305,17 @@
   (if t
       nil
     (with-temp-buffer
-     (insert-file-contents file)
-     (goto-char (point-min))
-     (when (re-search-forward "^#\\+BEGIN_PREVIEW$" nil 1)
-       (goto-char (point-min))
-       (let ((beg (+ 1 (re-search-forward "^#\\+BEGIN_PREVIEW$" nil 1)))
-             (end (progn (re-search-forward "^#\\+END_PREVIEW$" nil 1)
-                         (match-beginning 0))))
-         (goto-char beg)
-         (while (search-forward "\n" end t)
-           (replace-match " " nil t))
-         (buffer-substring beg end))))))
+      (insert-file-contents file)
+      (goto-char (point-min))
+      (when (re-search-forward "^#\\+BEGIN_PREVIEW$" nil 1)
+        (goto-char (point-min))
+        (let ((beg (+ 1 (re-search-forward "^#\\+BEGIN_PREVIEW$" nil 1)))
+              (end (progn (re-search-forward "^#\\+END_PREVIEW$" nil 1)
+                          (match-beginning 0))))
+          (goto-char beg)
+          (while (search-forward "\n" end t)
+            (replace-match " " nil t))
+          (buffer-substring beg end))))))
 
 (defun salih/delete-index (list)
   "Delete items containing the word 'index' from LIST."

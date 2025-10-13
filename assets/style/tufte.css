@@ -180,7 +180,7 @@ img {
   font-size: 0.7rem;
   top: -0.5rem;
   left: 0.1rem;
-  color: blue;
+  color: color(srgb 0.475 0.327 0.2802);
 }
 
 .sidenote:before {
