@@ -13,6 +13,15 @@
   <link rel="stylesheet" href="/style/main.css">
 
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const p = document.querySelector('#content > p:first-of-type');
+  if (p && /^[\u0600-\u06FF]/.test(p.textContent.trim())) {
+    p.classList.add('arabic');
+  }
+});
+</script>
+
 
 
   <script async data-id="101390423" src= "//static.getclicky.com/js"></script> <noscript>

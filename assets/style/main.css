@@ -69,6 +69,11 @@ body {
   position: relative;
 }
 
+p {
+  font-family: "Times", "Amiri", "Arial", serif;
+  text-align: justify;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -93,7 +98,6 @@ body::before {
 
 p {
   unicode-bidi: plaintext;
-  line-height: 1.6;
 }
 
 /* Arabic text support */
@@ -234,7 +238,6 @@ blockquote {
   color: #5d4037;
   text-align: center;
   font-size: 1.1em;
-  line-height: 1.6;
   position: relative;
   background: none;
 }
@@ -263,6 +266,7 @@ blockquote p {
   unicode-bidi: plaintext;
   margin: 0;
   padding: 0 2em;
+  font-family: "Georgia", "Amiri", "Arial", serif;
 }
 
 div.epigraph {
@@ -585,26 +589,19 @@ span.tag::before {
   display: none;
 }
 
-/* #content > p:first-of-type::first-letter { */
-/*   color: white; */
-/*   background-color: black; */
-/*   border-radius: 2px; */
-/*   /\* box-shadow: 3px 3px 0 red; *\/ */
-/*   font-size: 250%; */
-/*   padding: 6px 3px; */
-/*   margin-right: 6px; */
-/*   float: left; */
-/* } */
 
-:target {
-  background: linear-gradient(90deg, transparent, rgba(141, 110, 99, 0.2), transparent);
+#content > p:first-of-type:not(.arabic)::first-letter {
+  color: #3a2f28;
+  font-size: 270%;
+  font-weight: 500;
+  float: left !important;
+  margin-right: 6px !important;
+  margin-top: 4px;
+  line-height: 0.9;
+  position: relative;
+  font-family: inherit;
 }
-a:target + .target-text {
-  background: linear-gradient(90deg, transparent, rgba(141, 110, 99, 0.2), transparent);
-}
-li:has(> a:target) {
-  background: linear-gradient(90deg, transparent, rgba(141, 110, 99, 0.2), transparent);
-}
+
 
 .recents-2 {
   display: none;
@@ -667,34 +664,6 @@ li:has(> a:target) {
   padding: 10px;
   max-width: 300px;
 }
-/* body { */
-/*   font-family: Pragmatapro; */
-/* } */
-/* h1, */
-/* h2, */
-/* h3, */
-/* h4, */
-/* h5, */
-/* h6 { */
-/*   font-family: Hack; */
-/*   font-weight: bolder !important; */
-/* } */
-
-/* ul { */
-/*   list-style: none; */
-/*   margin-left: 0; */
-/*   padding-left: 0; */
-/* } */
-
-/* li { */
-/*   padding-left: 1em; */
-/*   text-indent: -1em; */
-/* } */
-
-/* li:before { */
-/*   content: "- "; */
-/*   padding-right: 7px; */
-/* } */
 
 h1 {
   font-size: x-large;
