@@ -63,6 +63,8 @@ a {
 }
 
 body {
+mix-blend-mode: multiply;
+
   font-family: "Georgia", "Amiri", serif;
   background: #faf8f4;
   color: #2c1810;
@@ -693,4 +695,70 @@ a.title,
 a.header,
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   word-break: normal;
+}
+
+
+
+.BACKLINKS {
+  position: relative;
+  float: right;
+  clear: right;
+  margin-right: -48%;
+  width: 40%;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  vertical-align: baseline;
+  padding: 10px 15px;
+  background: rgba(125, 85, 72, 0.03);
+  font-size: 0.85em;
+}
+
+.BACKLINKS::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 15px;
+  width: 15%;
+  height: 1px;
+}
+
+.BACKLINKS p {
+  margin: 0;
+  text-align: left;
+  color: #5d4037;
+  font-style: italic;
+}
+
+.BACKLINKS a {
+  font-size: 0.95em;
+  word-break: break-word;
+}
+
+@media (max-width: 800px) {
+  .BACKLINKS {
+    display: block;
+    float: none;
+    width: auto;
+    margin: 1.5em 2.5%;
+    padding: 15px;
+    background: rgba(125, 85, 72, 0.05);
+  }
+
+  .BACKLINKS::before {
+    position: absolute;
+    left: -2px;
+    top: -8px;
+    width: auto;
+    height: auto;
+    color: #8d6e63;
+    font-size: 1.2em;
+    font-weight: bold;
+    background: none;
+  }
+
+  .BACKLINKS p {
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
 }

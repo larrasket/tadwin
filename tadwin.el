@@ -4,7 +4,168 @@
 (load "~/blog/id.el")
 (load "~/blog/formats.el")
 
-(setq ess-ask-for-ess-directory nil)
+(defun salih/should-add-backlinks-p ()
+  "Check if backlinks should be added to the current buffer.
+Returns nil if buffer contains (salih/print-back-links t) or {{{indx}}}."
+  (save-excursion
+    (goto-char (point-min))
+    (not (or (search-forward "(salih/print-back-links t)" nil t)
+             (search-forward "(salih/print-back-links)" nil t)
+             (search-forward "{{{indx}}}" nil t)))))
+
+(defun salih/format-backlinks-list (blog-nodes private-count)
+  "Format the backlinks text with blog references and private note count."
+  (let ((blog-count (length blog-nodes)))
+    (cond
+     ;; Only blog nodes
+     ((and (> blog-count 0) (= private-count 0))
+      (concat "This section was referenced in "
+              (salih/format-node-links blog-nodes)
+              "."))
+     ((and (= blog-count 0) (> private-count 0))
+      nil)
+     ((and (> blog-count 0) (> private-count 0))
+      (concat "This section was referenced in "
+              (salih/format-node-links blog-nodes)
+              (format ", and in %d other private note%s."
+                      private-count
+                      (if (> private-count 1) "s" ""))))
+     ;; No backlinks
+     (t nil))))
+
+(defun salih/format-node-links (nodes)
+  "Format a list of nodes as links with their titles."
+  (let* ((links (mapcar (lambda (node)
+                          (format "[[id:%s][%s]]"
+                                  (org-roam-node-id node)
+                                  (org-roam-node-title node)))
+                        nodes))
+         (link-count (length links)))
+    (cond
+     ((= link-count 1) (car links))
+     ((= link-count 2) (concat (car links) " and " (cadr links)))
+     (t (concat (mapconcat 'identity (butlast links) ", ")
+                ", and " (car (last links)))))))
+
+(defun salih/get-backlinks-text (id)
+  "Get formatted backlinks text for the given ID."
+  (when (and id (fboundp 'org-roam-backlinks-get) (salih/should-add-backlinks-p))
+    (let* ((node (org-roam-node-from-id id))
+           (backlinks (when node (org-roam-backlinks-get node :unique t)))
+           (blog-nodes '())
+           (private-count 0)
+           (skip-titles '("Commentary" "TL;DRs")))
+      ;; Classify backlinks, skipping certain titles
+      (dolist (backlink backlinks)
+        (let* ((source-node (org-roam-backlink-source-node backlink))
+               (file-path (org-roam-node-file source-node))
+               (title (org-roam-node-title source-node)))
+          (unless (member title skip-titles)
+            (if (cl-search "blog" file-path)
+                (push source-node blog-nodes)
+              (setq private-count (1+ private-count))))))
+      ;; Reverse to maintain order
+      (setq blog-nodes (reverse blog-nodes))
+      ;; Format the output with wrapper
+      (let ((backlinks-text (salih/format-backlinks-list blog-nodes private-count)))
+        (when backlinks-text
+          (concat "#+BEGIN_BACKLINKS\n" backlinks-text "\n#+END_BACKLINKS"))))))
+
+(defun salih/insert-backlinks-before-export (backend)
+  "Insert backlinks text after headings and top-level properties with org:id property.
+Inserts BEFORE any #+BEGIN_* blocks or content."
+  (when (org-export-derived-backend-p backend 'html)
+    (let ((skip-titles '("Commentary" "TL;DRs")))
+      (save-excursion
+        ;; First, handle top-level document properties (before any headings)
+        (goto-char (point-min))
+        (let ((first-heading-pos (save-excursion
+                                   (re-search-forward org-heading-regexp nil t)))
+              (doc-title (or (cadar (org-collect-keywords '("TITLE"))) "")))
+          (when (and first-heading-pos
+                     (not (member doc-title skip-titles)))
+            (goto-char (point-min))
+            (when (re-search-forward "^[ \t]*:ID:[ \t]+\\(.+\\)[ \t]*$" first-heading-pos t)
+              (let ((id (match-string-no-properties 1)))
+                ;; Found an ID in the top-level properties, find insertion point
+                (goto-char (point-min))
+                (let ((insert-pos (point-min)))
+                  ;; Skip past drawers and keyword lines, but stop at #+BEGIN_*
+                  (catch 'done
+                    (while (< (point) first-heading-pos)
+                      (cond
+                       ;; Start of a drawer - skip it
+                       ((looking-at "^[ \t]*:\\([A-Z]+\\):")
+                        (if (re-search-forward "^[ \t]*:END:[ \t]*$" first-heading-pos t)
+                            (progn
+                              (forward-line 1)
+                              (setq insert-pos (point)))
+                          (throw 'done nil)))
+                       ;; Hit a #+BEGIN_* block - stop here, insert before it
+                       ((looking-at "^[ \t]*#\\+BEGIN_")
+                        (setq insert-pos (point))
+                        (throw 'done nil))
+                       ;; Keyword line or empty line - keep going
+                       ((or (looking-at "^[ \t]*#\\+")
+                            (looking-at "^[ \t]*$"))
+                        (forward-line 1)
+                        (setq insert-pos (point)))
+                       ;; Something else (content) - stop here
+                       (t (throw 'done nil)))))
+                  ;; Insert backlinks text at the found position
+                  (let ((backlinks-text (salih/get-backlinks-text id)))
+                    (when backlinks-text
+                      (goto-char insert-pos)
+                      (insert backlinks-text "\n\n"))))))))
+
+        ;; Now handle all headings with ID property
+        (goto-char (point-min))
+        (while (re-search-forward org-heading-regexp nil t)
+          (let ((element (org-element-at-point)))
+            (when (and (eq (org-element-type element) 'headline)
+                       (org-element-property :ID element))
+              (let ((id (org-element-property :ID element))
+                    (title (org-element-property :raw-value element)))
+                (unless (member title skip-titles)
+                  ;; We're at a headline with an ID
+                  (beginning-of-line)
+                  (forward-line 1)
+                  ;; Skip property drawers, but stop at #+BEGIN_* or content
+                  (let ((limit (save-excursion
+                                 (or (outline-next-heading)
+                                     (point-max))))
+                        (insert-pos (point)))
+                    (catch 'stop-skip
+                      (while (< (point) limit)
+                        (cond
+                         ;; Drawer - skip it
+                         ((looking-at "^[ \t]*:\\([A-Z]+\\):")
+                          (let ((drawer-name (match-string 1)))
+                            (if (member drawer-name '("PROPERTIES" "DATE" "LOGBOOK" "STATISTICS"))
+                                (if (re-search-forward "^[ \t]*:END:[ \t]*$" limit t)
+                                    (progn
+                                      (forward-line 1)
+                                      (setq insert-pos (point)))
+                                  ;; Couldn't find END, stop here
+                                  (throw 'stop-skip nil))
+                              ;; Not a drawer we skip, stop here
+                              (throw 'stop-skip nil))))
+                         ;; Hit a #+BEGIN_* block - stop here, insert before it
+                         ((looking-at "^[ \t]*#\\+BEGIN_")
+                          (setq insert-pos (point))
+                          (throw 'stop-skip nil))
+                         ;; Empty line - keep going
+                         ((looking-at "^[ \t]*$")
+                          (forward-line 1)
+                          (setq insert-pos (point)))
+                         ;; Something else (content) - stop here
+                         (t (throw 'stop-skip nil)))))
+                    ;; Insert backlinks text
+                    (let ((backlinks-text (salih/get-backlinks-text id)))
+                      (when backlinks-text
+                        (goto-char insert-pos)
+                        (insert backlinks-text "\n\n")))))))))))))
+(add-hook 'org-export-before-processing-functions #'salih/insert-backlinks-before-export)
 
 
 (defun salih/recents (d)
@@ -410,7 +571,8 @@ information."
 (defun salih/org-html-publish-to-tufte-html (plist filename pub-dir)
   "Make sure that the file is not already published befeore really publihing
 it."
-  (let* ((rebuild nil)
+  ;; rebuilding all for now
+  (let* ((rebuild t)
          (html (let* ((org-inhibit-startup t)
                       (visiting (find-buffer-visiting filename))
                       (salih/rebuild nil)

@@ -249,30 +249,26 @@ if (window.location.pathname.includes('art_paintings_media')) {
 }
 </script>
 
+
 <script>
-
-
-
-  
-// Stack Page Formatter - Apply inline layout to specific pages
 (function() {
   'use strict';
-  
+
   // Check if current page should have the formatting applied
   function shouldApplyFormatting() {
     const path = window.location.pathname;
-    
+
     // Check if path matches our target patterns
-    return path === '/stack' || 
-           path === '/stack.html' || 
+    return path === '/stack' ||
+           path === '/stack.html' ||
            path.startsWith('/sh/');
   }
-  
+
   // Only proceed if we're on a target page
   if (!shouldApplyFormatting()) {
     return;
   }
-  
+
   // Add CSS styles
   function addStyles() {
     const style = document.createElement('style');
@@ -318,6 +314,7 @@ if (window.location.pathname.includes('art_paintings_media')) {
         padding: 0 !important;
       }
 
+
       /* Hide block elements that will be moved */
       .outline-3 .moved-block {
         display: block;
@@ -331,7 +328,7 @@ if (window.location.pathname.includes('art_paintings_media')) {
     `;
     document.head.appendChild(style);
   }
-  
+
   // Extract ID from container div
   function extractIdFromContainer(entry) {
     const containerId = entry.id;
@@ -340,27 +337,27 @@ if (window.location.pathname.includes('art_paintings_media')) {
     }
     return null;
   }
-  
+
   // Apply the formatting transformation
   function applyFormatting() {
     // Process each entry
     const entries = document.querySelectorAll('.outline-3');
-    
+
     entries.forEach((entry, index) => {
       // Extract the anchor ID from the container before transformation
       const anchorId = extractIdFromContainer(entry);
-      
+
       // Extract components
       const h3 = entry.querySelector('h3');
       const notes = entry.querySelector('.notes');
       const outlineText = entry.querySelector('.outline-text-3');
       const tag = entry.querySelector('.tag');
-      
+
       if (!h3 || !outlineText) return;
-      
+
       // Get title text (preserve any TODO/DONE prefixes and links)
       let titleText = h3.innerHTML;
-      
+
       // Get timestamp
       let timestampText = '';
       if (notes) {
@@ -369,19 +366,22 @@ if (window.location.pathname.includes('art_paintings_media')) {
           timestampText = timestamp.textContent;
         }
       }
-      
-      // Get content paragraphs (excluding notes and tag)
+
+      // Get content paragraphs (excluding notes, tag, and backlinks)
       const contentParagraphs = [];
       const blockElements = [];
-      
+      const backlinks = entry.querySelector('.BACKLINKS');
+
       Array.from(outlineText.children).forEach(child => {
-        if (child.classList.contains('notes') || child.classList.contains('tag')) {
-          return; // Skip these
+        if (child.classList.contains('notes') ||
+            child.classList.contains('tag') ||
+            child.classList.contains('BACKLINKS')) {
+          return; // Skip these - they'll be handled separately
         }
-        
+
         if (child.tagName === 'P') {
           contentParagraphs.push(child.innerHTML);
-        } else if (child.tagName === 'UL' || child.tagName === 'OL' || 
+        } else if (child.tagName === 'UL' || child.tagName === 'OL' ||
                    child.tagName === 'BLOCKQUOTE' || child.tagName === 'PRE' ||
                    child.tagName === 'DL' || child.classList.contains('epigraph')) {
           blockElements.push(child.outerHTML);
@@ -389,48 +389,55 @@ if (window.location.pathname.includes('art_paintings_media')) {
           blockElements.push(child.outerHTML);
         }
       });
-      
+
       // Get tag HTML (preserve links and formatting)
       let tagHtml = '';
       if (tag) {
         tagHtml = tag.outerHTML;
       }
-      
+
       // Construct the new single paragraph
       let newContent = '';
-      
+
       // Add date at the start (gray)
       if (timestampText) {
         newContent += '<span class="entry-date">' + timestampText + '</span>';
       }
-      
+
       // Add title with emdash
       newContent += titleText + ' — ';
-      
+
       // Add content paragraphs
       newContent += contentParagraphs.join(' ');
-      
+
       // Add tag at the end in parentheses (preserve HTML but force inline)
       if (tagHtml) {
         // Extract just the inner content and wrap it properly
         let tagContent = tag.innerHTML;
         newContent += ' <span class="entry-tag">(' + tagContent + ')</span>';
       }
-      
+
       // Create new paragraph element
       const newParagraph = document.createElement('p');
       newParagraph.className = 'entry-paragraph';
       newParagraph.innerHTML = newContent;
-      
-      // Clear the entry and add the new paragraph
+
+      // Clear the entry
       entry.innerHTML = '';
-      entry.appendChild(newParagraph);
-      
+
       // Preserve the anchor ID by setting it on the transformed entry
       if (anchorId) {
         entry.id = anchorId;
       }
-      
+
+      // Add backlinks FIRST so they can float to the right
+      if (backlinks) {
+        entry.appendChild(backlinks.cloneNode(true));
+      }
+
+      // Then add the main paragraph
+      entry.appendChild(newParagraph);
+
       // Add any block elements after the paragraph
       blockElements.forEach(blockHtml => {
         const blockDiv = document.createElement('div');
@@ -438,7 +445,7 @@ if (window.location.pathname.includes('art_paintings_media')) {
         blockDiv.innerHTML = blockHtml;
         entry.appendChild(blockDiv);
       });
-      
+
       // Add separator after each entry (except the last one)
       if (index < entries.length - 1) {
         const separator = document.createElement('hr');
@@ -449,21 +456,21 @@ if (window.location.pathname.includes('art_paintings_media')) {
       }
     });
   }
-  
+
   // Initialize when DOM is ready
   function init() {
     addStyles();
-    
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', applyFormatting);
     } else {
       applyFormatting();
     }
   }
-  
+
   // Start the initialization
   init();
-})();
+})()
 </script>
 
 
