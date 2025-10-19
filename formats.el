@@ -12,11 +12,22 @@ h1:not(#preamble h1):before {
 
 
 h1 b, h2 b, h3 b, h4 b {
-    background: teal;
-    padding: 1px 9px;
-    font-weight: bold;
-    color: white;
-    font-size: small;
+background: rgba(38, 38, 38, 0.64);
+padding: 0.1em 0.7em;
+color: white;
+font-size: 0.6em;
+font-family: \"Arial\";
+}
+
+
+h2,
+h3,
+h4,
+h5,
+h6,
+h7,
+h8 {
+  font-style: normal !important;
 }
 
 
