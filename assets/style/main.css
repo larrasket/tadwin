@@ -63,10 +63,10 @@ a {
 }
 
 body {
-mix-blend-mode: multiply;
+  mix-blend-mode: multiply;
 
   font-family: "Georgia", "Amiri", serif;
-  background: #faf8f4;
+  background: #fbf7f0;
   color: #2c1810;
   position: relative;
 }
@@ -83,7 +83,7 @@ body::before {
   right: 5%;
   width: 150px;
   height: 150px;
-  background-image: url('/style/svg/-236.svg');
+  background-image: url("/style/svg/-236.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -103,15 +103,20 @@ p {
 }
 
 /* Arabic text support */
-[lang="ar"], .arabic {
+[lang="ar"],
+.arabic {
   font-family: "Amiri", "Georgia", serif;
   direction: rtl;
   text-align: right;
   line-height: 1.8;
 }
 
-[lang="ar"] h1, [lang="ar"] h2, [lang="ar"] h3,
-[lang="ar"] h4, [lang="ar"] h5, [lang="ar"] h6 {
+[lang="ar"] h1,
+[lang="ar"] h2,
+[lang="ar"] h3,
+[lang="ar"] h4,
+[lang="ar"] h5,
+[lang="ar"] h6 {
   font-style: normal;
   text-align: right;
 }
@@ -185,7 +190,7 @@ pre.src::after {
   right: 5px;
   width: 50px;
   height: 50px;
-  background-image: url('/style/svg/-222.svg');
+  background-image: url("/style/svg/-222.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -252,7 +257,7 @@ blockquote::before {
   transform: translate(-50%, -50%);
   width: 250px;
   height: 250px;
-  background-image: url('/style/svg/-236.svg');
+  background-image: url("/style/svg/-236.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -292,7 +297,7 @@ div.epigraph::before {
   transform: translate(-50%, -50%);
   width: 180px;
   height: 180px;
-  background-image: url('/style/svg/-1-watw8z.svg');
+  background-image: url("/style/svg/-1-watw8z.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -396,7 +401,7 @@ blockquote p {
 }
 
 .header-divider {
-display: none;
+  display: none;
 }
 
 .header-divider span {
@@ -405,7 +410,8 @@ display: none;
 }
 
 @keyframes subtle-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -465,7 +471,7 @@ table tr th:last-child {
   display: inline-block;
   width: 16px;
   height: 16px;
-  background-image: url('/style/svg/Skeleton Hand Flower 02.svg');
+  background-image: url("/style/svg/Skeleton Hand Flower 02.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -591,7 +597,6 @@ span.tag::before {
   display: none;
 }
 
-
 #content > p:first-of-type:not(.arabic)::first-letter {
   color: #3a2f28;
   font-size: 270%;
@@ -603,7 +608,6 @@ span.tag::before {
   position: relative;
   font-family: inherit;
 }
-
 
 .recents-2 {
   display: none;
@@ -697,13 +701,11 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   word-break: normal;
 }
 
-
-
 .BACKLINKS {
   position: relative;
   float: right;
   clear: right;
-  margin-right: -48%;
+  margin-right: -46%;
   width: 40%;
   margin-top: 0.3rem;
   margin-bottom: 1rem;
