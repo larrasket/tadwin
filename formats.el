@@ -16,8 +16,8 @@ background: rgba(38, 38, 38, 0.64);
 padding: 0.1em 0.7em;
 color: white;
 font-size: 0.6em;
-font-family: \"Arial\";
 }
+
 
 
 h2,
