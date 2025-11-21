@@ -743,7 +743,6 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     float: none;
     width: auto;
     margin: 1.5em 2.5%;
-    padding: 15px;
     background: rgba(125, 85, 72, 0.05);
   }
 
