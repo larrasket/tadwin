@@ -583,7 +583,7 @@ span.tag::before {
   font-size: 0.9em;
   padding: 2px 0;
   margin: 4px 0;
-  border-left: 2px solid #c8b9b3;
+  /* border-left: 2px solid #c8b9b3; */
   padding-left: 10px;
 }
 
