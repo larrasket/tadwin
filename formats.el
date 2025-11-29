@@ -28,7 +28,7 @@ h6,
 h7,
 h8 {
   font-style: normal !important;
-  font-family: Arial;
+  font-family: Arial !important;
 }
 
 
