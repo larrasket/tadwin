@@ -17,7 +17,7 @@ a:visited {
     color: #795548;
     text-decoration: none;
     border-bottom: 1px dotted #795548;
-    transition: all 0.1s ease;
+    transition: none;
     position: relative;
 }
 
@@ -377,7 +377,7 @@ blockquote p {
 .site-nav a {
     margin: 0 0.5em;
     color: #795548;
-    transition: color 0.2s ease;
+    transition: none;
 }
 
 .site-nav a:hover {
