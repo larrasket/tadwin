@@ -3,6 +3,7 @@
 (require 'doom-start)
 (load "~/blog/id.el")
 (load "~/blog/formats.el")
+(setq indent-bars-starting-column 99)
 
 (defun salih/should-add-backlinks-p ()
   "Check if backlinks should be added to the current buffer.
@@ -700,4 +701,6 @@ it."
 (remove-hook! 'org-mode-hook (projectile-mode -1))
 
 (message "Build Complete!")
-(setq org-html-htmlize-output-type nil) ; Disable syntax highlighting
+(setq org-html-htmlize-output-type 'inline-css) ; Disable syntax highlighting
+
+(setq indent-bars-starting-column 0)

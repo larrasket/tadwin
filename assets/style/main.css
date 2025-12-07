@@ -491,9 +491,13 @@ h2 .timestamp-wrapper {
 .timestamp-kwd {
     display: none;
 }
+.notes {
+    font-family: monospace;
+}
 
 .notes p {
     margin-block-start: 0.4em;
+    font-family: monospace;
     margin-block-end: 0em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
