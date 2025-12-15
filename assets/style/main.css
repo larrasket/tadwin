@@ -16,7 +16,7 @@ a:link,
 a:visited {
     color: #795548;
     text-decoration: none;
-    border-bottom: 1px dotted #795548;
+    border-bottom: 1px solid #795548;
     transition: none;
     position: relative;
 }
@@ -47,19 +47,18 @@ a:active {
     text-decoration: none;
 }
 
-.tag a:after {
-    color: #a1887f;
-    content: " •";
-}
+/* .tag a:after { */
+/*     color: #a1887f; */
+/*     content: " •"; */
+/* } */
 
 .tag a:before {
     color: #a1887f;
-    content: "• ";
+    content: "~";
 }
 
 a {
     text-decoration: none;
-    /* border-bottom: 1px dotted #000; */
 }
 
 body {
@@ -779,7 +778,7 @@ a.no-style {
 .actualquote {
     margin: 1.5em 0;
     padding: 1em 1.5em;
-    border-left: 1px dotted #0f172a;
+    border-left: 2px solid #0f172a;
     background: #f9f9f9;
     color: #0f172a;
 }
