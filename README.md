@@ -1,3 +1,7 @@
+# DEC 2025: DO NOT USE THIS.
+
+This code is a complete mess. Harmful at best. It's one of the worst things I've ever done to a computer in my entire life. I'm only keeping it as a reminder of how a 40 lines of code utility transformed into an ugly +1K single file that's impossible to comprehend.
+
 -   <span class="timestamp-wrapper"><span class="timestamp">[2025-04-19 Sat 14:12] </span></span> The code here is **EXTREME MESS**. It is not a software
     that&rsquo;s supposed to be used by others (yet). Feel free to ask me about
     anything, email address can be found on my profile or web page.
