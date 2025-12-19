@@ -5,6 +5,17 @@
 (load "~/blog/formats.el")
 (setq indent-bars-starting-column 99)
 
+(defun salih/prefix-absolute-paths (output backend info)
+  "Prefix absolute paths with /~saleh for the nested static site."
+  (if (org-export-derived-backend-p backend 'html)
+      (replace-regexp-in-string
+       "\\(href\\|src\\)=\"/\\([^/~\"]\\)"
+       "\\1=\"/~saleh/\\2"
+       output)
+    output))
+
+(add-to-list 'org-export-filter-final-output-functions #'salih/prefix-absolute-paths)
+
 (defun salih/should-add-backlinks-p ()
   "Check if backlinks should be added to the current buffer.
 Returns nil if buffer contains (salih/print-back-links t) or {{{indx}}}."
@@ -641,7 +652,7 @@ it."
            :html-head ,header
            :html-html5-fancy t
            ;; HTML directory
-           :publishing-directory "public"
+           :publishing-directory "/Users/l/roam/hugo/static/~saleh"
            :recursive t
            :headline-levels 8
            :with-sub-superscript nil
@@ -668,7 +679,7 @@ it."
           ("blog-static"
            :base-directory "./content"
            :base-extension "css\\|js\\|png\\|jpg\\|html\\|json\\|jpeg\\|gif\\|svg\\|pdf\\|mp3\\|woff2\\|woff"
-           :publishing-directory "public"
+           :publishing-directory "/Users/l/roam/hugo/static/~saleh"
            :recursive t
            :publishing-function org-publish-attachment)
 
@@ -682,7 +693,7 @@ it."
           ("assets"
            :base-directory "./assets"
            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|svg\\|pdf\\|mp3\\|woff2\\|woff\\|html\\|md\\|ico"
-           :publishing-directory "public"
+           :publishing-directory "/Users/l/roam/hugo/static/~saleh"
            :recursive t
            :publishing-function org-publish-attachment)
 

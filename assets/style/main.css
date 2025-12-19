@@ -42,18 +42,14 @@ a:active {
 
 .tag a {
     color: #8d6e63;
+    background: rgba(188, 170, 164, 0.15);
     text-transform: lowercase;
     font-style: italic;
     text-decoration: none;
 }
 
-/* .tag a:after { */
-/*     color: #a1887f; */
-/*     content: " •"; */
-/* } */
-
 .tag a:before {
-    color: #a1887f;
+    color: #8d6e63;
     content: "~";
 }
 
