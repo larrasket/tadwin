@@ -711,7 +711,37 @@ it."
 (org-publish-all t)
 (remove-hook! 'org-mode-hook (projectile-mode -1))
 
+;; Generate ID→URL mapping for Hugo
+(defun salih/generate-blog-id-mapping ()
+  "Generate a JSON mapping of org IDs to published URLs for Hugo."
+  (let ((mapping '())
+        (content-dir "/Users/l/blog/content/"))
+    ;; Scan all org files in blog content directory
+    (dolist (file (directory-files-recursively content-dir "\\.org$"))
+      (with-temp-buffer
+        (insert-file-contents file)
+        (goto-char (point-min))
+        ;; Find all :ID: properties in the file
+        (while (re-search-forward "^[ \t]*:ID:[ \t]+\\(.+\\)[ \t]*$" nil t)
+          (let* ((id (match-string-no-properties 1))
+                 (rel-path (file-relative-name file content-dir))
+                 (html-path (concat "/" (file-name-sans-extension rel-path) ".html")))
+            (push (cons id html-path) mapping)))))
+    (with-temp-file "/Users/l/roam/hugo/data/blog_ids.json"
+      (insert "{\n")
+      (let ((first t))
+        (dolist (pair mapping)
+          (unless first (insert ",\n"))
+          (setq first nil)
+          (insert (format "  %S: %S" (car pair) (cdr pair)))))
+      (insert "\n}\n"))
+    (message "Generated blog ID mapping with %d entries" (length mapping))))
+
+(salih/generate-blog-id-mapping)
+
 (message "Build Complete!")
+
+
 (setq org-html-htmlize-output-type 'inline-css) ; Disable syntax highlighting
 
 (setq indent-bars-starting-column 0)
