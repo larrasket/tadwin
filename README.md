@@ -10,7 +10,7 @@ This code is a complete mess. Harmful at best. It's one of the worst things I've
 > personal script. It might not work for you but it will surely help inspiring you
 > to build something similar, or it will work for you after some modifications.
 
-This repository holds code for my publishing system that I use for my [website](https://lr0.fly.dev/),
+This repository holds code for my publishing system that I use for my [website](https://lr0.org/~saleh),
 written in elisp.
 
 
