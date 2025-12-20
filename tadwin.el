@@ -896,6 +896,9 @@ it."
 
 (salih/generate-blog-id-mapping)
 
+(with-temp-buffer
+  (call-process "python3" nil t nil "/Users/l/roam/hugo/scripts/generate_hugo_ids.py"))
+
 (message "Build Complete!")
 
 
