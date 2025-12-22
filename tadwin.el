@@ -107,14 +107,6 @@ Excludes Hugo content URLs (sections derived from hugo_ids.json)."
     (let ((file (org-roam-node-file node)))
       (and file (string-match-p "/roam/hugo/content/" file)))))
 
-(defun salih/is-hugo-short-post-p (node)
-  "Check if NODE is a Hugo diary or microblog post (treated as short post)."
-  (when node
-    (let ((file (org-roam-node-file node)))
-      (and file
-           (string-match-p "/roam/hugo/content/" file)
-           (or (string-match-p "/diary/" file)
-               (string-match-p "/microblog/" file))))))
 
 ;; Override org-id link export to use Hugo URLs
 (defun salih/org-id-export-handler (link description format info)
